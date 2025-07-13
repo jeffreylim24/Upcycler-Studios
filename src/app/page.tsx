@@ -4,8 +4,11 @@ export default function Home() {
   return (
     <div>
       <Button>
-        Test Button Testing
+        Hi Janelle
       </Button>
-    </div>
+      <Button>
+        Hi Janelle 2
+      </Button>
+    </div>  
   );
 };
