@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       <Button>
-        Test Button
+        Test Button Testing
       </Button>
     </div>
   );
