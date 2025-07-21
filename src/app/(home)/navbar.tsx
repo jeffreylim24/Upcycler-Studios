@@ -54,7 +54,7 @@ export const Navbar = () => {
                 </span>
             </Link>
 
-            <div className="items-center gap-4 hidden lg:flex">
+            <div className="items-center gap-4 hidden lg:flex mr-6">
                 {navbarItems.map((item) => (
                 <NavBarItem 
                     key={item.href}
