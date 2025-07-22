@@ -8,11 +8,11 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
-
 const poppins = Poppins({
     subsets: ["latin"],
     weight: ["700"],
 });
+
 
 interface NavbarItemProps {
     href: string;
