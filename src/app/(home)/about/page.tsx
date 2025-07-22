@@ -1,28 +1,72 @@
-import Image from 'next/image';
+import Image from "next/image";
+
 
 const Page = () => {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold mb-4">About Us</h1>
-      <h2 className="text-2xl font-semibold mb-2">Where fashion is an infinite loop!</h2>
-      <p className="text-lg text-center max-w-2xl mb-8">
-        Through creative upcycling, we transform discarded materials into unique fashion pieces, promoting sustainability and reducing waste. Our mission is to inspire a circular economy in the fashion industry.
-      </p>
-      <Image
-        src="/Founder.jpg"
-        alt="Founder"
-        width={250}
-        height={250}
-        className="rounded-full mb-4 object-cover"
-      />
-      <div className="text-center max-w-xl">
-        <h2 className="text-2xl font-semibold mb-2">Meet Our Founder</h2>
-        <p>
-          Mr Jay Kwok Zheng Feng is the visionary behind Upcycler Studios. With a passion for sustainable fashion and years of experience in the industry, John is dedicated to making a positive impact on the world through innovative upcycling solutions.
-        </p>
-      </div>
-    </div>
-  );
+    return (
+        <div
+            className="flex flex-col min-h-screen w-full bg-cover bg-center py-0"
+            style={{ backgroundImage: 'url("/background.jpg")' }}
+        >
+            {/* Mission Block */}
+            <div className="w-full py-16 flex flex-col items-center shadow-md">
+                <div className="max-w-4xl w-full px-4">
+                    <h1 className="text-4xl font-bold mb-2 text-white text-center">About Us</h1>
+                    <h2 className="text-xl font-semibold text-white mb-4 text-center italic">Where fashion is an infinite loop</h2>
+                    <p className="text-md text-center text-white">
+                        Through creative upcycling and sustainable design, we transform discarded textiles into unique, stylish pieces that tell a story and inspire change.
+                    </p>
+                </div>
+            </div>
+            {/* Founder Block */}
+            <div 
+                className="w-full bg-white py-16 flex flex-col items-center border-t border-gray-200 shadow-md">
+                <div className="max-w-4xl w-full px-4 flex flex-col items-center">
+                    <div className="flex flex-col md:flex-row gap-12 justify-center items-stretch w-full h-full">
+                        {/* Founder 1 */}
+                        <div className="flex flex-col items-center justify-center flex-1 min-w-[220px] h-full">
+                            <Image 
+                                src="/founder.jpg"
+                                alt="Co-Founder of Upcycler Studios"
+                                width={200}
+                                height={200}
+                                className="rounded-full shadow-lg mb-4 object-cover"
+                            />
+                            <h2 className="text-2xl font-semibold mb-2">Jay Kwok</h2>
+                            <p className="text-center max-w-xs text-gray-700">
+                                Jay Kwok Zheng Feng, our founder, is passionate about sustainability and creative reuse in the realm of fashion.
+                            </p>
+                        </div>
+                        {/* Founder 2 */}
+                        <div className="flex flex-col items-center justify-center flex-1 min-w-[220px] h-full">
+                            <Image 
+                                src="/founder2.jpg"
+                                alt="Co-Founder of Upcycler Studios"
+                                width={200}
+                                height={200}
+                                className="rounded-full shadow-lg mb-4 object-cover"
+                            />
+                            <h2 className="text-2xl font-semibold mb-2">Co-founder</h2>
+                            <p className="text-center max-w-xs text-gray-700">
+                                _____, co-founder, brings a creative vision and a drive for innovation, helping Upcycler Studios push the boundaries of sustainable fashion.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Additional Block */}
+            <div 
+                className="flex flex-col min-h-screen w-full bg-cover bg-center py-0 justify-center items-center"
+                style={{ backgroundImage: 'url("/background2.png")' }}
+            >
+                <div className="max-w-4xl w-full px-4 flex flex-col items-center justify-center text-center">
+                    <h2 className="text-2xl font-bold mb-4 text-white">Our Journey</h2>
+                    <p className="max-w-2xl text-white">
+                        Placeholder for more information about Upcycler Studios, such as our story, milestones, bestsellers etc. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default Page;
