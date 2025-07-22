@@ -6,7 +6,7 @@ export default function Home() {
     <main
       className="relative flex flex-col items-center min-h-screen px-4"
       style={{
-        backgroundImage: "url('/wallpaperflare-cropped.jpg')",
+        backgroundImage: "url('/background.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
