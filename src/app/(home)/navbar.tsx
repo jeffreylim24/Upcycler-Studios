@@ -1,12 +1,17 @@
 "use client";
 
 import Link from 'next/link';
+import { useState } from 'react';
+import { MenuIcon } from 'lucide-react';
 import { Poppins } from 'next/font/google';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+
+import { NavbarSidebar } from './navbar-sidebar';
+
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -50,14 +55,19 @@ const navbarItems = [
 
 export const Navbar = () => {
     const pathName = usePathname();
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     return (
-        <nav className="h-20 flex border-b justify-between font-medium bg-white pr-6">
+        <nav className="h-20 flex border-b justify-between font-medium bg-white">
             <Link href="/" className="pl-6 flex items-center">
                 <Image src="/Logo.png" alt="Logo" width={70} height={70} className="mr-3"/>
-                <span className={cn("text-5xl font-semibold",  poppins.className)}>
+                <span className={cn("text-4xl font-semibold",  poppins.className)}>
                     Upcycler Studios
                 </span>
             </Link>
+
+            <NavbarSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} items={navbarItems}>
+
+            </NavbarSidebar>
 
             <div className='items-center gap-4 hidden lg:flex'>
                 {navbarItems.map((item) => (
@@ -68,6 +78,27 @@ export const Navbar = () => {
                     >
                         {item.children}
                     </NavbarItem>))}
+            </div>
+
+            <div className="hidden lg:flex">
+                <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
+                    <Link href="/login">
+                        Log In
+                    </Link>
+                </Button>
+                <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
+                    <Link href="/signup">
+                        Start Selling
+                    </Link>
+                </Button>
+            </div>
+
+            <div className="flex lg:hidden items-center justify-center">
+                <Button variant="ghost" className="size-12 border-transparent bg-white" onClick={() => setIsSidebarOpen(true)}>
+                    <MenuIcon> 
+                        
+                    </MenuIcon>
+                </Button>
             </div>
         </nav>
     );
