@@ -20,9 +20,14 @@ const Page = () => {
     const scrollLeft = () => {
         setStartIdx((prev) => {
             const next = prev - VISIBLE_COUNT;
-            return next < 0 ? Math.max(0, total - VISIBLE_COUNT) : next;
+            if (next < 0) {
+                return Math.max(0, total - VISIBLE_COUNT);
+            } else {
+                return next;
+            }
         });
     };
+
     const scrollRight = () => {
         setStartIdx((prev) => {
             const next = prev + VISIBLE_COUNT;
