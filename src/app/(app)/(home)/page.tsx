@@ -1,7 +1,13 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { config } from "process";
+import { CollectionSlug, getPayload } from "payload";
+import configPromise from "@payload-config";
 
-export default function Home() {
+
+export default async function Home() {
+
+  
   return (
     <main
       className="relative flex flex-col items-center min-h-screen px-4"

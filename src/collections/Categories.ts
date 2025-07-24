@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, CollectionSlug } from "payload";
 
 export const Categories: CollectionConfig = {
     slug: "categories",
@@ -8,6 +8,12 @@ export const Categories: CollectionConfig = {
             type: "text",
             required: true,
 
+        },
+        {
+            name: "parent",
+            type: "relationship",
+            relationTo: "categories" as CollectionSlug, // self-referencing
+            required: false,
         },
     ],
 };
