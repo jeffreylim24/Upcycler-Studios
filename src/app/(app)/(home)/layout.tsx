@@ -2,8 +2,8 @@ import { Navbar } from "./navbar";
 import { Footer } from "./footer";
 import { SearchFilters } from "./search-filters";
 import configPromise from "@payload-config";
-import type { CollectionSlug } from "payload";
 import { getPayload } from "payload";
+import { Category } from "@/payload-types" 
 
 
 interface Props {
@@ -17,7 +17,7 @@ const Layout = async ({ children }: Props) => {
     });
 
     const data = await payload.find({
-        collection: "categories" as CollectionSlug, // Ensure this matches your collection slug
+        collection: "categories", // Ensure this matches your collection slug
         depth: 1,
         pagination: false, // Disable pagination if you want all categories
         where: {
@@ -27,8 +27,19 @@ const Layout = async ({ children }: Props) => {
         },
     });
 
+    const formattedData = data.docs.map((doc) => ({
+        ...doc,
+        subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
+            // becasue of depth, we know doc will be a type of category
+            ...(doc as Category),
+            subcategories: undefined,
+        })) 
+    })); 
 
-    console.log(data);
+    console.log({
+        data,
+        formattedData,
+    });
 
     return (
         <div className="flex flex-col min-h-screen">

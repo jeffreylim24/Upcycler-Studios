@@ -1,12 +1,10 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { config } from "process";
-import { CollectionSlug, getPayload } from "payload";
-import configPromise from "@payload-config";
+
 
 
 export default async function Home() {
-
   
   return (
     <main

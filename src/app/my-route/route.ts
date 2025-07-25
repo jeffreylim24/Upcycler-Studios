@@ -7,7 +7,7 @@ export const GET = async () => {
   })
 
   const data = await payload.find({
-    collection: 'users',
+    collection: "categories", // Ensure this matches your collection slug
   })
 
   return Response.json(data)
