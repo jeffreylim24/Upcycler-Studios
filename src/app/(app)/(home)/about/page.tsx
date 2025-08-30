@@ -3,10 +3,16 @@ import Image from "next/image";
 
 const Page = () => {
     return (
-        <div
-            className="flex flex-col min-h-screen w-full bg-cover bg-center py-0"
-            style={{ backgroundImage: 'url("/background.jpg")' }}
-        >
+        <main
+      className="relative flex flex-col items-center min-h-screen px-4"
+      style={{
+        backgroundImage: "url('/background.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed", // This creates the window effect
+      }}
+    >
             {/* Mission Block */}
             <div className="w-full py-16 flex flex-col items-center shadow-md">
                 <div className="max-w-4xl w-full px-4">
@@ -65,7 +71,7 @@ const Page = () => {
                     </p>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
 
