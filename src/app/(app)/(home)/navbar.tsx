@@ -82,12 +82,12 @@ export const Navbar = () => {
 
             <div className="hidden lg:flex">
                 <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
-                    <Link href="/login">
+                    <Link prefetch href="/login">
                         Log In
                     </Link>
                 </Button>
                 <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
-                    <Link href="/signup">
+                    <Link prefetch href="/signup">
                         Start Selling
                     </Link>
                 </Button>
