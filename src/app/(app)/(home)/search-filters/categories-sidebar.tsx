@@ -6,7 +6,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTRPC } from '@/trpc/client';
 import { useQuery } from '@tanstack/react-query';
-
 import { CategoriesGetManyOutput } from '@/modules/categories/types';
 
 interface Props {
