@@ -3,15 +3,12 @@ import { Button } from "@/components/ui/button";
 
 import { ListFilterIcon, SearchIcon } from "lucide-react";
 
-import { CustomCategory } from "../types";
-
 interface Props {
   disabled?: boolean;
-  data: CustomCategory[];
   onOpenSidebar: () => void;
 }
 
-export const SearchInput = ({ disabled, data, onOpenSidebar }: Props) => {
+export const SearchInput = ({ disabled, onOpenSidebar }: Props) => {
   return (
     <div className='flex items-center gap-2 w-full'>
       <div className='relative w-full'>

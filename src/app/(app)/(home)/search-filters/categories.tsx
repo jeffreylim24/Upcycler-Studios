@@ -5,12 +5,12 @@ import { ListFilterIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
- 
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
+
 import { CategoryDropdown } from "./category-dropdown";
-import { CustomCategory } from "../types";
 
 interface CatgoriesProps {
-  data: CustomCategory[];
+  data: CategoriesGetManyOutput;
   onOpenSidebar: () => void;
 }
 
