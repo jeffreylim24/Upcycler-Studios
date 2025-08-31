@@ -37,7 +37,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
           isActive && !isNavigationHovered && "bg-white border-primary",
           isOpen && "bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-x-[4px] -translate-y-[4px]"
         )}>
-          <Link href={`/${category.slug === 'all' ? '' : category.slug}`} className='w-full text-left flex items-center justify-between'>
+          <Link href={`/${category.slug}`} className='w-full text-left flex items-center justify-between'>
             {category.name}
           </Link>
           
