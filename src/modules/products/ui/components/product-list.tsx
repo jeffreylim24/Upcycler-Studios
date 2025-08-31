@@ -3,13 +3,23 @@
 import { useTRPC } from '@/trpc/client';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { useProductFilters } from '../../hooks/use-product-filters';
+
 interface Props {
   category?: string;
 }
 
 export const ProductList = ({ category }: Props) => {
+  const [filters] = useProductFilters();
+
   const trpc = useTRPC();
-  const { data } = useSuspenseQuery(trpc.products.getMany.queryOptions({ category }));
+  const { data } = useSuspenseQuery(trpc.products.getMany.queryOptions({ 
+    category,
+    minPrice: filters.minPrice !== null && filters.minPrice !== undefined && filters.minPrice !== '' ? Number(filters.minPrice) : null,
+    maxPrice: filters.maxPrice !== null && filters.maxPrice !== undefined && filters.maxPrice !== '' ? Number(filters.maxPrice) : null,
+    tags: filters.tags,
+    sort: filters.sort || "curated", // <-- ensure a default is sent
+  }));
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>
