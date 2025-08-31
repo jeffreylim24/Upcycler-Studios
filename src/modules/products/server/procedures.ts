@@ -1,8 +1,10 @@
 import z from "zod";
-import type { Where } from "payload";
+import type { Sort, Where } from "payload";
 
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { Category } from "@/payload-types";
+
+import { sortingValues } from "../search-params";
 
 export const productsRouter = createTRPCRouter({
   getMany: baseProcedure
@@ -11,17 +13,36 @@ export const productsRouter = createTRPCRouter({
         category: z.string().nullable().optional(),
         minPrice: z.number().nullable().optional(),
         maxPrice: z.number().nullable().optional(),
+        tags: z.array(z.string()).nullable().optional(),
+        sort: z.enum(sortingValues).nullable().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
       const where: Where = {};
+      let sort: Sort = "-createdAt";
+      console.log("Sorting input:", input.sort);
 
-      if (input.minPrice) {
-        where.price = { greater_than_equal: input.minPrice };
+      if (input.sort === 'curated') {
+        sort = 'name'; // Placeholder, replace with actual trending logic
+        console.log("Sorting method:", sort);
       }
 
-      if (input.maxPrice) {
-        where.price = { less_than_equal: input.maxPrice };
+      if (input.sort === 'trending') {
+        sort = 'createdAt'; // Placeholder, replace with actual trending logic
+        console.log("Sorting method:", sort);
+      }
+
+      if (input.sort === 'hot_and_new') {
+        sort = '-createdAt'; // Placeholder, replace with actual trending logic
+        console.log("Sorting method:", sort);
+      }
+
+      if (input.minPrice != null) {
+        where.price = { ...where.price, greater_than_equal: input.minPrice };
+      }
+
+      if (input.maxPrice != null) {
+        where.price = { ...where.price, less_than_equal: input.maxPrice };
       }
 
       if (input.category) {
@@ -60,10 +81,17 @@ export const productsRouter = createTRPCRouter({
         }
       }
       
+      if (input.tags && input.tags.length > 0) {
+        where['tags.name'] = {
+          in: input.tags,
+        };
+      }
+
       const data = await ctx.payload.find({
         collection: 'products',
         depth: 1, // Populate 'category' and 'image'
         where,
+        sort,
       });
     
       return data;
