@@ -194,7 +194,7 @@ export interface Product {
   name: string;
   description?: string | null;
   /**
-   * Price in SGD
+   * Price in USD
    */
   price: number;
   category?: (string | null) | Category;

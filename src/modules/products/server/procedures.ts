@@ -2,14 +2,17 @@ import z from "zod";
 import type { Sort, Where } from "payload";
 
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import { Category } from "@/payload-types";
+import { Category, Media } from "@/payload-types";
 
 import { sortingValues } from "../search-params";
+import { DEFAULT_LIMIT } from "@/constants";
 
 export const productsRouter = createTRPCRouter({
   getMany: baseProcedure
     .input(
       z.object({
+        cursor: z.number().default(1),
+        limit: z.number().default(DEFAULT_LIMIT),
         category: z.string().nullable().optional(),
         minPrice: z.number().nullable().optional(),
         maxPrice: z.number().nullable().optional(),
@@ -20,21 +23,17 @@ export const productsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const where: Where = {};
       let sort: Sort = "-createdAt";
-      console.log("Sorting input:", input.sort);
 
       if (input.sort === 'curated') {
         sort = 'name'; // Placeholder, replace with actual trending logic
-        console.log("Sorting method:", sort);
       }
 
       if (input.sort === 'trending') {
         sort = 'createdAt'; // Placeholder, replace with actual trending logic
-        console.log("Sorting method:", sort);
       }
 
       if (input.sort === 'hot_and_new') {
         sort = '-createdAt'; // Placeholder, replace with actual trending logic
-        console.log("Sorting method:", sort);
       }
 
       if (input.minPrice != null) {
@@ -92,8 +91,16 @@ export const productsRouter = createTRPCRouter({
         depth: 1, // Populate 'category' and 'image'
         where,
         sort,
+        page: input.cursor,
+        limit: input.limit,
       });
     
-      return data;
+      return {
+        ...data,
+        docs: data.docs.map((doc) => ({
+          ...doc,
+          image: doc.image as Media | null,
+        }))
+      }
     }),
 })
