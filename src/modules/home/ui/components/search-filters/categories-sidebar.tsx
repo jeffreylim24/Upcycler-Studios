@@ -28,11 +28,6 @@ export const CategoriesSidebar = ({
   // If we have parent categories, show those. Otherwise show root categories
   const currentCategories = parentCategories ?? data ?? [];
 
-  {/* Debugging */}
-  console.log('CategoriesSidebar data:', data);
-  console.log('CategoriesSidebar data length:', data?.length);
-  console.log('Current categories:', currentCategories);
-
   const handleOpenChange = (open: boolean) => {
     setSelectedCategory(null);
     setParentCategories(null);
