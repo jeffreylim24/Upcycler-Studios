@@ -37,17 +37,20 @@ export default function Home() {
         {/* Value Proposition Section */}
         <section className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           <div className="bg-white/80 rounded-lg shadow-md p-8 flex flex-col items-center transform transition-transform duraion-300 hover:scale-105">
-            <Image src="/eco-materials.jpg" alt="Eco Materials" width={64} height={64} className="mb-4 rounded-full" />
+          {/* Find proper image */}
+            <Image src="/placeholder-image.jpg" alt="Eco Materials" width={64} height={64} className="mb-4 rounded-full" />
             <h2 className="text-xl font-semibold mb-2">Eco-Friendly Materials</h2>
             <p className="text-gray-700 text-center">All our products are made from recycled and sustainable materials.</p>
           </div>
           <div className="bg-white/80 rounded-lg shadow-md p-8 flex flex-col items-center transform transition-transform duraion-300 hover:scale-105">
-            <Image src="/innovative-designs.jpg" alt="Innovative Designs" width={64} height={64} className="mb-4 rounded-full" />
+            {/* Find proper image */}
+            <Image src="/placeholder-image.jpg" alt="Innovative Designs" width={64} height={64} className="mb-4 rounded-full" />
             <h2 className="text-xl font-semibold mb-2">Innovative Designs</h2>
             <p className="text-gray-700 text-center">Unique upcycled fashion pieces designed for modern living.</p>
           </div>
           <div className="bg-white/80 rounded-lg shadow-md p-8 flex flex-col items-center transform transition-transform duraion-300 hover:scale-105">
-            <Image src="/community-projects.jpg" alt="Community Projects" width={64} height={64} className="mb-4 rounded-full" />
+            {/* Find proper image */}
+            <Image src="/placeholder-image.jpg" alt="Community Projects" width={64} height={64} className="mb-4 rounded-full" />
             <h2 className="text-xl font-semibold mb-2">Community Projects</h2>
             <p className="text-gray-700 text-center">We collaborate with local communities for a sustainable impact.</p>
           </div>

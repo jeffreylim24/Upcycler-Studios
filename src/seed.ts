@@ -138,7 +138,6 @@ const categories = [
 ]
 
 const seed = async () => {
-  
   const payload = await getPayload({config});
 
   for (const category of categories) {
