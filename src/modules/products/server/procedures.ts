@@ -6,9 +6,28 @@ import { Category, Media, Tenant } from "@/payload-types";
 
 import { sortingValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
-import { tenantField } from "@payloadcms/plugin-multi-tenant/fields";
 
 export const productsRouter = createTRPCRouter({
+  getOne: baseProcedure
+    .input(
+      z.object({
+        id: z.string()
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const product = await ctx.payload.findByID({
+        id: input.id,
+        collection: 'products',
+        depth: 2, // Populate 'category', 'image' & 'tenant' & 'tenant.image'
+      });
+
+      return {
+        ...product,
+        image: product.image as Media | null,
+        tenant: product.tenant as Tenant & { image: Media | null },
+      }
+    }),
+
   getMany: baseProcedure
     .input(
       z.object({
