@@ -7,11 +7,13 @@ import { tagsRouter } from '@/modules/tags/server/procedures';
 import { tenantRouter } from '@/modules/tenants/server/procedures';
 import { checkoutRouter } from '@/modules/checkout/server/procedures';
 import { libraryRouter } from '@/modules/library/server/procedures';
+import { reviewsRouter } from '@/modules/reviews/server/procedures';
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   tags: tagsRouter,
   tenants: tenantRouter,
+  reviews: reviewsRouter,
   checkout: checkoutRouter,
   products: productsRouter,
   library: libraryRouter,
