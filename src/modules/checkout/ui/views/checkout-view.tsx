@@ -47,10 +47,8 @@ export const CheckoutView = ({ tenantSlug }: { tenantSlug: string }) => {
 
   useEffect(() => {
     if (states.success) {
-      setStates({ success: false, cancel: false });
       clearCart();
       // TODO: Invalidate library
-      router.push('/products');
     }
   }, [states.success, clearCart, router, setStates]);
 

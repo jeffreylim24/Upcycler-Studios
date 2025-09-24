@@ -27,7 +27,7 @@ export const SearchInput = ({ disabled, onOpenSidebar }: Props) => {
       </Button>
       {session.data?.user && (
         <Button asChild variant='elevated' className='h-12 text-base'>
-          <Link href="/library">
+          <Link prefetch href="/library">
             <BookmarkCheckIcon />
             Library
           </Link>
