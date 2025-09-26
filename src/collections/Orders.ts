@@ -5,13 +5,20 @@ import { isSuperAdmin } from "@/lib/access";
 export const Orders: CollectionConfig = {
   slug: "orders",
   access: {
-    read: ({ req }) => isSuperAdmin(req.user),
+    read: ({ req }) => {
+      if (isSuperAdmin(req.user)) return true
+      if (!req.user) return false
+      return {
+        user: { equals: req.user.id },
+      }
+    },
     create: ({ req }) => isSuperAdmin(req.user),
     update: ({ req }) => isSuperAdmin(req.user),
     delete: ({ req }) => isSuperAdmin(req.user),
   },
   admin: {
     useAsTitle: "name",
+    hidden: ({ user }) => !isSuperAdmin(user),
   },
   fields: [
     {
