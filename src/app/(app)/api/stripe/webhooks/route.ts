@@ -48,6 +48,7 @@ export async function POST(req: Request) {
 
   const permittedEvents: string[] = [
     "checkout.session.completed",
+    "account.updated",
   ];
 
   if (!permittedEvents.includes(event.type)) {
@@ -59,12 +60,13 @@ export async function POST(req: Request) {
   }
 
   try {
+    let data;
     const payload = await getPayload({ config });
     console.log("✅ Payload instance created");
 
     switch (event.type) {
       case "checkout.session.completed": {
-        const data = event.data.object as Stripe.Checkout.Session;
+        data = event.data.object as Stripe.Checkout.Session;
         console.log("🛒 Processing checkout session:", data.id);
         console.log("📋 Session metadata:", data.metadata);
 
@@ -92,6 +94,9 @@ export async function POST(req: Request) {
           {
             expand: ["line_items.data.price.product"],
           },
+          {
+            stripeAccount: event.account,
+          }
         );
 
         if (!expandedSession.line_items?.data || !expandedSession.line_items?.data.length) {
@@ -109,6 +114,7 @@ export async function POST(req: Request) {
             collection: "orders",
             data: {
               stripeCheckoutSessionId: data.id,
+              stripeAccountId: event.account,
               user: user.id,
               product: item.price.product.metadata.id,
               name: item.price.product.name,
@@ -119,6 +125,20 @@ export async function POST(req: Request) {
         }
         
         console.log(`🎉 All orders created successfully for session: ${data.id}`);
+        break;
+      }
+      case "account.updated": {
+        data = event.data.object as Stripe.Account;
+
+        await payload.update({
+          collection: "tenants",
+          where: {
+            stripeAccountId: { equals: data.id },
+          },
+          data: { stripeDetailsSubmitted: data.details_submitted },
+        })
+
+        console.log("✅ Tenant updated for account:", data.id);
         break;
       }
       default:
