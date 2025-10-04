@@ -1,4 +1,4 @@
-import { LoaderIcon, Tag } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Checkbox } from "@/components/ui/checkbox";

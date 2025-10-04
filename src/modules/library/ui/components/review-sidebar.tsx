@@ -6,7 +6,7 @@ interface Props {
   productId: string;
 }
 
-export const ReviewSidebar = ({ productId }: { productId: string }) => {
+export const ReviewSidebar = ({ productId }: Props) => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.reviews.getOne.queryOptions({ productId }));
   

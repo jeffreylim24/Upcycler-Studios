@@ -18,7 +18,7 @@ const seed = async () => {
     },
   })
 
-  // Create admin user
+  // Create admin user with tenant attached
   await payload.create({
     collection: "users",
     data: {
@@ -26,6 +26,11 @@ const seed = async () => {
       password: "admin123",
       username: "admin",
       roles: ['super-admin'],
+      tenants: [
+        {
+          tenant: adminTenant.id,
+        }
+      ],
     },
   });
 }

@@ -7,13 +7,14 @@ import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { loadProductFilters } from "@/modules/products/search-params";
 import { DEFAULT_LIMIT } from "@/constants";
 
-
 interface Props {
   params: Promise<{
     subcategory: string;
   }>;
   searchParams: Promise<SearchParams>;
 }
+
+export const dynamic = 'force-dynamic';
 
 const Page = async ({ params, searchParams }: Props) => {
   const { subcategory } = await params;

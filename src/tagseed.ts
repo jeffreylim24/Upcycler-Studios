@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { Product } from "./payload-types";
 
 const tags = [
   { name: "Shirt" },
@@ -23,7 +24,7 @@ const seed = async () => {
       collection: "tags",
       data: {
         name: tag.name,
-        product: products.docs.map((p: any) => p.id), // associate all products
+        product: products.docs.map((p: Product) => p.id), // associate all products
       },
     });
   }
