@@ -40,7 +40,7 @@ const NavbarItem = ({
                 isActive && "bg-black text-white hover:bg-black hover:text-white"
         )}> 
             <Link href={href}>
-               {children}
+                {children}
             </Link>
         </Button>
     );
@@ -48,10 +48,10 @@ const NavbarItem = ({
 
 const navbarItems = [
     { href: "/", children: "Home" },
-    { href: "/about", children: "About" },
     { href: "/featured", children: "Featured" },
-    { href: "/men", children: "Men" },
-    { href: "/women", children: "Women" },
+    { href: "/about", children: "About" },
+    { href: "/how-it-works", children: "How It Works" }, // Explain the upcycling process
+    { href: "/sustainability", children: "Our Impact" }, // Sustainability mission/stats
     { href: "/contact", children: "Contact Us" },
 ]
 

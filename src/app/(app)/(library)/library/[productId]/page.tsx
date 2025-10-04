@@ -5,6 +5,8 @@ import { getQueryClient, trpc } from "@/trpc/server";
 import { ProductView, ProductViewSkeleton } from "@/modules/library/ui/views/product-view";
 import { Suspense } from "react";
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: Promise<{ productId: string }>;
 }
