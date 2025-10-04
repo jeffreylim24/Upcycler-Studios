@@ -104,7 +104,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 
             <div className='p-6'>
               {data.description ? (
-                <RichText data={data.description}/>
+                <RichText data={data.description as unknown as import("lexical").SerializedEditorState<import("lexical").SerializedLexicalNode>}/>
               ) : (
                 <p className='font-medium text-muted-foreground italic'>No description provided.</p>
               )}

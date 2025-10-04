@@ -44,7 +44,7 @@ export const ProductView = ({ productId }: Props) => {
 
           <div className='lg:col-span-5'>
             {data.content ? (
-                <RichText data={data.content} />
+                <RichText data={data.content as unknown as import("lexical").SerializedEditorState<import("lexical").SerializedLexicalNode>} />
             ) : (
               <p className='font-medium italic text-muted-foreground'>
                 No special content
