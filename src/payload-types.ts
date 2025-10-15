@@ -256,7 +256,6 @@ export interface Product {
   category?: (string | null) | Category;
   tags?: (string | null) | Tag;
   image?: (string | null) | Media;
-  refundPolicy: '30 days' | '14 days' | '7 days' | '3 days' | 'No refund';
   /**
    * Protected content only visible to customers after purhcase. Add product documentation, downloadable files, getting started guides, and bonus materials. Supports Markdown formatting.
    */
@@ -484,7 +483,6 @@ export interface ProductsSelect<T extends boolean = true> {
   category?: T;
   tags?: T;
   image?: T;
-  refundPolicy?: T;
   content?: T;
   isPrivate?: T;
   isArchived?: T;

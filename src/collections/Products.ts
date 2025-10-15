@@ -19,7 +19,7 @@ export const Products: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     description: 'You must verify your account before creating products',
-    defaultColumns: ['name', 'category', 'description', 'price', 'refundPolicy'],
+    defaultColumns: ['name', 'category', 'description', 'price'],
   },  
   fields: [
     {
@@ -55,13 +55,6 @@ export const Products: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-    },
-    {
-      name: 'refundPolicy',
-      type: 'select',
-      options: ['30 days', '14 days', '7 days', '3 days', 'No refund'],
-      defaultValue: '30 days',
-      required: true,
     },
     {
       name: 'content',

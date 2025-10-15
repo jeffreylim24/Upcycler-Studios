@@ -3,11 +3,9 @@ import config from "@payload-config";
 import { Product } from "./payload-types";
 
 const tags = [
-  { name: "Shirt" },
-  { name: "Jeans" },
-  { name: "Shorts" },
-  { name: "Jackets" },
-  { name: "Shoes" },
+  { name: "Mens" },
+  { name: "Womens" },
+  { name: "Kids" },
 ];
 
 const seed = async () => {

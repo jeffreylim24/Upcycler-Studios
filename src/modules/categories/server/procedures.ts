@@ -11,7 +11,7 @@ export const categoriesRouter = createTRPCRouter({
         parent: {
           exists: false,
         },
-      }, 
+      },
       sort: "name",
     });
 
@@ -22,7 +22,14 @@ export const categoriesRouter = createTRPCRouter({
         ...(doc as Category),
       }))
     }));
-    
+
+    // Sort with "All" first, then alphabetically
+    formattedData.sort((a, b) => {
+      if (a.slug === 'all') return -1;
+      if (b.slug === 'all') return 1;
+      return a.name.localeCompare(b.name);
+    });
+
     return formattedData;
   }),
 })

@@ -133,13 +133,6 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                     {isCopied ? <CheckIcon /> : <LinkIcon />}
                   </Button>
                 </div>
-
-                <p className='text-center font-medium'>
-                  {data.refundPolicy === 'No refund'
-                    ? 'No refunds'
-                    : `${data.refundPolicy} money back guarantee`
-                  }
-                </p>
               </div>
 
               <div className='p-6'>
