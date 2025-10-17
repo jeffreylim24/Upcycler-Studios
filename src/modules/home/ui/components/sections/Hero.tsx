@@ -36,12 +36,12 @@ export const Hero = () => {
 
         {/* Tagline */}
         <p className="text-sm text-white/90 mb-8 font-light tracking-[0.15em] uppercase">
-          WHERE FASHION MEETS INFINITE LOOP.
+          WHERE FASHION IS AN INFINITE LOOP.
         </p>
 
         {/* CTA Button */}
         <Link
-          href="#shop"
+          href="/all"
           className="inline-block bg-white text-[#0a0a0a] text-sm px-8 py-3 font-semibold tracking-[0.05em] uppercase rounded-[25px] transition-all duration-300 border-2 border-white hover:bg-transparent hover:text-white hover:-translate-y-1 shadow-lg"
         >
           SHOP NOW

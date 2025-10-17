@@ -12,7 +12,7 @@ export const Footer = () => {
               Upcycler Studios
             </h3>
             <p className="text-white/60 font-light text-sm mb-3">
-              Where fashion meets infinite loop.
+              Where fashion is an infinite loop.
             </p>
           </div>
 

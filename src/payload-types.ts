@@ -253,7 +253,7 @@ export interface Product {
    * Price in USD
    */
   price: number;
-  category?: (string | null) | Category;
+  category?: (string | Category)[] | null;
   tags?: (string | null) | Tag;
   image?: (string | null) | Media;
   /**
