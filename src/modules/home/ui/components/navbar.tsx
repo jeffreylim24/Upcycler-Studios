@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { MenuIcon } from 'lucide-react';
-import { Poppins } from 'next/font/google';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
@@ -15,107 +14,111 @@ import { useQuery } from '@tanstack/react-query';
 import { NavbarSidebar } from './navbar-sidebar';
 
 
-const poppins = Poppins({
-    subsets: ["latin"],
-    weight: ["700"],
-});
-
-
 interface NavbarItemProps {
-    href: string;
-    children: React.ReactNode;
-    isActive?: boolean;
+  href: string;
+  children: React.ReactNode;
+  isActive?: boolean;
 };
 
 const NavbarItem = ({
-    href,
-    children,
-    isActive = false,
+  href,
+  children,
+  isActive = false,
 }: NavbarItemProps) => {
-    return (
-        <Button 
-            asChild 
-            variant='outline' 
-            className={cn("bg-transparent hover:bg-transparent rounded-full hover:border-primary border-transparent px-3.5 text-lg",
-                isActive && "bg-black text-white hover:bg-black hover:text-white"
-        )}> 
-            <Link href={href}>
-                {children}
-            </Link>
-        </Button>
-    );
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "text-white/70 hover:text-white transition-colors tracking-wide relative",
+        isActive && "text-white after:absolute after:-bottom-2 after:left-0 after:w-full after:h-px after:bg-white after:content-['']"
+      )}
+    >
+      {children}
+    </Link>
+  );
 };
 
 const navbarItems = [
-    { href: "/", children: "Home" },
-    { href: "/featured", children: "Featured" },
-    { href: "/about", children: "About" },
-    { href: "/how-it-works", children: "How It Works" }, // Explain the upcycling process
-    { href: "/sustainability", children: "Our Impact" }, // Sustainability mission/stats
-    { href: "/contact", children: "Contact Us" },
+  { href: "/", children: "Home" },
+  { href: "/featured", children: "Featured" },
+  { href: "/about", children: "About" },
+  { href: "/all", children: "Shop Now" },
 ]
 
 export const Navbar = () => {
-    const pathName = usePathname();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const pathName = usePathname();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const trpc = useTRPC();
-    const session = useQuery(trpc.auth.session.queryOptions());
+  const trpc = useTRPC();
+  const session = useQuery(trpc.auth.session.queryOptions());
 
-    return (
-        <nav className="h-20 flex border-b justify-between font-medium bg-white">
-            <Link href="/" className="pl-6 flex items-center">
-                <Image src="/Logo.png" alt="Logo" width={70} height={70} className="mr-3"/>
-                <span className={cn("text-4xl font-semibold",  poppins.className)}>
-                    Upcycler Studios
-                </span>
+  return (
+    <nav className="fixed top-0 w-full bg-black/95 backdrop-blur-lg z-[1000] border-b border-white/10">
+      <div className="w-full mx-auto px-8 py-4 flex justify-between items-center">
+        <Link href="/" className="flex items-center gap-3 text-2xl font-semibold text-white no-underline tracking-tight">
+          <Image
+            src="/logo-white.png"
+            alt="Upcycler Studios Logo"
+            width={36}
+            height={36}
+            className="object-contain"
+          />
+          <span>Upcycler Studios</span>
+        </Link>
+
+        <NavbarSidebar
+          open={isSidebarOpen}
+          onOpenChange={setIsSidebarOpen}
+          items={navbarItems}
+          session={session.data}
+        />
+
+        <div className='items-center gap-8 hidden lg:flex'>
+          {navbarItems.map((item) => (
+            <NavbarItem
+              key={item.href}
+              href={item.href}
+              isActive={pathName === item.href}
+            >
+              {item.children}
+            </NavbarItem>
+          ))}
+        </div>
+
+        {session.data?.user ? (
+          <div className="hidden lg:flex">
+            <Link
+              href="/admin"
+              className="text-white/90 hover:text-white transition-colors tracking-wide px-6 py-2 bg-white/10 rounded-md hover:bg-white/20"
+            >
+              Dashboard
             </Link>
+          </div>
+        ) : (
+          <div className="hidden lg:flex gap-4">
+            <Link
+              prefetch
+              href="/login"
+              className="text-white/90 hover:text-white transition-colors tracking-wide px-6 py-2 hover:bg-white/10 rounded-md"
+            >
+              Log In
+            </Link>
+            <Link
+              prefetch
+              href="/signup"
+              className="text-white bg-white/10 hover:bg-white/20 transition-colors tracking-wide px-6 py-2 rounded-md"
+            >
+              Start Selling
+            </Link>
+          </div>
+        )}
 
-            <NavbarSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} items={navbarItems}>
-
-            </NavbarSidebar>
-
-            <div className='items-center gap-4 hidden lg:flex'>
-                {navbarItems.map((item) => (
-                    <NavbarItem 
-                        key={item.href} 
-                        href={item.href}
-                        isActive={pathName === item.href}
-                    >
-                        {item.children}
-                    </NavbarItem>))}
-            </div>
-
-            {session.data?.user ? (
-                <div className="hidden lg:flex">
-                    <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
-                        <Link href="/admin">
-                            Dashboard
-                        </Link>
-                    </Button>
-                </div>
-            ) : (
-                <div className="hidden lg:flex">
-                    <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
-                        <Link prefetch href="/login">
-                            Log In
-                        </Link>
-                    </Button>
-                    <Button asChild variant="secondary" className="border-l border-t-0 border-b-0 border-r-0 px-10 h-full rounded-none bg-white hover:bg-black hover:text-white transition-colors text-lg">
-                        <Link prefetch href="/signup">
-                            Start Selling
-                        </Link>
-                    </Button>
-                </div>
-            )}
-
-            <div className="flex lg:hidden items-center justify-center">
-                <Button variant="ghost" className="size-12 border-transparent bg-white" onClick={() => setIsSidebarOpen(true)}>
-                    <MenuIcon> 
-                        
-                    </MenuIcon>
-                </Button>
-            </div>
-        </nav>
-    );
+        <div className="flex lg:hidden items-center justify-center">
+          <Button variant="ghost" className="size-12 border-transparent bg-transparent hover:bg-white/10 text-white" onClick={() => setIsSidebarOpen(true)}>
+            <MenuIcon />
+          </Button>
+        </div>
+      </div>
+    </nav>
+  );
 };
