@@ -35,19 +35,19 @@ export const Navbar = ({ slug }: Props) => {
   }));
 
   return (
-    <nav className='h-20 border-b font-medium bg-white'>
+    <nav className='h-20 border-b border-gray-800 font-medium bg-[#0a0a0a]'>
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
         <Link href={generateTenantURL(slug)} className='flex items-center gap-2'>
           {data.image?.url && (
-            <Image 
-              src={data.image.url} 
-              width={32} 
-              height={32} 
-              className='rounded-full border shrink-0 size-[32px]'
+            <Image
+              src={data.image.url}
+              width={32}
+              height={32}
+              className='rounded-full border border-gray-700 shrink-0 size-[32px]'
               alt={slug}
             />
           )}
-          <p className='text-xl'>{data.name.toUpperCase()}</p>
+          <p className='text-xl text-white'>{data.name.toUpperCase()}</p>
         </Link>
         <CheckoutButton tenantSlug={slug} />
       </div>
@@ -57,10 +57,10 @@ export const Navbar = ({ slug }: Props) => {
 
 export const NavbarSkeleton = () => {
   return (
-    <nav className='h-20 border-b font-medium bg-white'>
+    <nav className='h-20 border-b border-gray-800 font-medium bg-[#0a0a0a]'>
       <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4 lg:px-12">
-        <Button className='bg-white' disabled>
-          <ShoppingCartIcon className='text-black' />
+        <Button className='bg-[#1a1a1a] border-gray-700' disabled>
+          <ShoppingCartIcon className='text-white' />
         </Button>
       </div>
     </nav>

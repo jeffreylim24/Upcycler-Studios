@@ -19,14 +19,14 @@ export const SearchInput = ({ disabled, onOpenSidebar }: Props) => {
   return (
     <div className='flex items-center gap-2 w-full'>
       <div className='relative w-full'>
-        <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500'/>
-        <Input className='pl-8' placeholder='Search products' disabled={disabled}/> 
+        <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400'/>
+        <Input className='pl-8 bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500' placeholder='Search products' disabled={disabled}/>
       </div>
-      <Button variant='elevated' className='size-12 shrink-0 flex lg:hidden' onClick={onOpenSidebar}>
+      <Button variant='elevated' className='size-12 shrink-0 flex lg:hidden bg-[#1a1a1a] border-gray-700 text-white hover:bg-[#252525]' onClick={onOpenSidebar}>
         <ListFilterIcon />
       </Button>
       {session.data?.user && (
-        <Button asChild variant='elevated' className='h-12 text-base'>
+        <Button asChild variant='elevated' className='h-12 text-base bg-[#1a1a1a] border-gray-700 text-white hover:bg-[#252525]'>
           <Link prefetch href="/library">
             <BookmarkCheckIcon />
             Library

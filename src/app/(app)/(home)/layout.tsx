@@ -1,11 +1,8 @@
-import { Suspense } from 'react';
 import { Inter } from 'next/font/google';
 
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient, trpc } from '@/trpc/server';
 import { Navbar } from "@/modules/home/ui/components/navbar";
 import { Footer } from "@/modules/home/ui/components/footer";
-import { SearchFilters, SearchFiltersSkeleton } from "@/modules/home/ui/components/search-filters";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,10 +25,10 @@ const Layout = async ({ children }: Props) => {
       <Navbar />
 
       {/* Padding to offset fixed navbar, can possibly find a better way */}
-      <div className='h-18 bg-black'/> 
+      <div className='h-18 bg-black'/>
 
       {/* Main content */}
-      <div className="flex-1 bg-[#f4f4f0]">
+      <div className="flex-1 bg-[#0a0a0a]">
         {children}
       </div>
 

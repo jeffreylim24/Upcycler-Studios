@@ -21,10 +21,10 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
   const Icon = isOpen ? ChevronDownIcon : ChevronRightIcon;
 
   return (
-    <div className={cn("p-4 border-b flex flex-col gap-2", className)}>
+    <div className={cn("p-4 border-b border-gray-700 flex flex-col gap-2", className)}>
       <div onClick={() => setIsOpen((current) => !current)} className='flex items-center justify-between cursor-pointer'>
-        <p className='font-medium'>{title}</p>
-        <Icon className='size-5'/>
+        <p className='font-medium text-white'>{title}</p>
+        <Icon className='size-5 text-gray-300'/>
       </div>
       {isOpen && children}
     </div>
@@ -61,25 +61,25 @@ export const ProductF = () => {
   }
 
   return (
-    <div className='border rounded-md bg-white'>
-      <div className='p-4 border-b flex items-center justify-between'>
-        <p className='font-medium'>Filters</p>
+    <div className='border border-gray-700 rounded-md bg-[#1a1a1a]'>
+      <div className='p-4 border-b border-gray-700 flex items-center justify-between'>
+        <p className='font-medium text-white'>Filters</p>
         {hasAnyFilters && (
-          <button className='underline cursor-pointer' onClick={onClear} type='button'>
+          <button className='underline cursor-pointer text-gray-300 hover:text-white transition' onClick={onClear} type='button'>
             Clear
           </button>
         )}
       </div>
       <ProductFilter title='Price'>
-        <PriceFilter 
+        <PriceFilter
           minPrice={filters.minPrice}
-          maxPrice={filters.maxPrice} 
+          maxPrice={filters.maxPrice}
           onMinPriceChange={(value) => onChange("minPrice", value)}
           onMaxPriceChange={(value) => onChange("maxPrice", value)}
         />
       </ProductFilter>
       <ProductFilter title='Tags' className='border-b-0'>
-        <TagsFilter 
+        <TagsFilter
           value={filters.tags}
           onChange={(value) => onChange("tags", value)}
         />

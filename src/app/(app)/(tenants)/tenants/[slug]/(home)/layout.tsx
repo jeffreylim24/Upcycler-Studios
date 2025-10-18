@@ -20,7 +20,7 @@ const Layout = async ({ children, params }: LayoutProps) => {
   }));
 
   return (
-    <div className='min-h-screen bg-[#F4F4F0] flex flex-col'>
+    <div className='min-h-screen bg-[#0a0a0a] text-white flex flex-col'>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<NavbarSkeleton />}>
           <Navbar slug={slug}/>

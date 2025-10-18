@@ -35,23 +35,23 @@ export const TagsFilter = ({ value, onChange }: TagsFilterProps) => {
     <div className='flex flex-col gap-y-2'>
       {isLoading ? (
         <div className='flex items-center justify-center p-4'>
-          <LoaderIcon className='size-4 animate-spin'/>
+          <LoaderIcon className='size-4 animate-spin text-gray-400'/>
         </div>
       ) : (
-        data?.pages.map((page) => 
+        data?.pages.map((page) =>
           page.docs.map((tag) => (
             <div key={tag.id} className="flex items-center justify-between cursor-pointer" onClick={() => onClick(tag.name)}>
-              <p className='font-medium'>{tag.name}</p>
+              <p className='font-medium text-gray-300'>{tag.name}</p>
               <Checkbox checked={value?.includes(tag.name)} onCheckedChange={() => onClick(tag.name)}/>
             </div>
           ))
         )
       )}
       {hasNextPage && (
-        <button 
-          disabled={isFetchingNextPage} 
-          onClick={() => fetchNextPage()} 
-          className='underline font-medium justify-start text-start disabled:opacity-50 cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md transition'
+        <button
+          disabled={isFetchingNextPage}
+          onClick={() => fetchNextPage()}
+          className='underline font-medium justify-start text-start disabled:opacity-50 cursor-pointer hover:bg-gray-800 px-2 py-1 rounded-md transition text-gray-300'
         >
           Load more...
         </button>
