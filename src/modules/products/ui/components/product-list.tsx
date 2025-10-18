@@ -45,9 +45,9 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
 
   if (data.pages?.[0]?.docs.length === 0) {
     return (
-      <div className='border border-black border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-white w-full rounded-lg'>
-        <InboxIcon />
-        <p className='text-base font-medium'>No products found</p>
+      <div className='border border-gray-700 border-dashed flex items-center justify-center p-8 flex-col gap-y-4 bg-[#1a1a1a] w-full rounded-lg'>
+        <InboxIcon className='text-gray-400' />
+        <p className='text-base font-medium text-gray-300'>No products found</p>
       </div>
     )
   }
@@ -74,10 +74,10 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
       </div>
       <div className='flex justify-center pt-8'>
         {hasNextPage && (
-          <Button 
-            disabled={isFetchingNextPage} 
-            onClick={() => fetchNextPage()} 
-            className='font-medium disabled:opacity-50 text-base bg-white'
+          <Button
+            disabled={isFetchingNextPage}
+            onClick={() => fetchNextPage()}
+            className='font-medium disabled:opacity-50 text-base bg-[#1a1a1a] text-white border-gray-700 hover:bg-[#252525]'
             variant='elevated'
           >
             Load More

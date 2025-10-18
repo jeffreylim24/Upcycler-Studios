@@ -47,7 +47,7 @@ export const CategoriesSidebar = ({
       } else {
         // This is a main category, navigate to /category
         if (category.slug === 'all') {
-          router.push('/');
+          router.push('/all');
         } else {
           router.push(`/${category.slug}`);
         }
@@ -64,18 +64,16 @@ export const CategoriesSidebar = ({
     }
   }
 
-  const backgroundColor = selectedCategory?.colour || 'white';
-
   {/* Debugging */}
   // Add this check
   if (!data || data.length === 0) {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side='left' className='p-0 transition-none'>
-          <SheetHeader className='p-4 border-b'>
-            <SheetTitle>Categories</SheetTitle>
+        <SheetContent side='left' className='p-0 transition-none bg-[#1a1a1a] border-gray-700'>
+          <SheetHeader className='p-4 border-b border-gray-700'>
+            <SheetTitle className='text-white'>Categories</SheetTitle>
           </SheetHeader>
-          <div className='p-4'>Loading...</div>
+          <div className='p-4 text-gray-300'>Loading...</div>
         </SheetContent>
       </Sheet>
     );
@@ -83,21 +81,21 @@ export const CategoriesSidebar = ({
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side='left' className='p-0 transition-none' style={{ backgroundColor}}>
-        <SheetHeader className='p-4 border-b'>
-          <SheetTitle>
+      <SheetContent side='left' className='p-0 transition-none bg-[#1a1a1a] border-gray-700'>
+        <SheetHeader className='p-4 border-b border-gray-700'>
+          <SheetTitle className='text-white'>
             Categories
           </SheetTitle>
         </SheetHeader>
         <ScrollArea className='flex flex-col overflow-y-auto h-full pb-2'>
           {parentCategories && (
-            <button onClick={handleBackClick} className='w-full text-left p-4 hover:bg-black hover:text-white flex items-center text-base font-medium cursor-pointer'>
+            <button onClick={handleBackClick} className='w-full text-left p-4 hover:bg-gray-800 text-white flex items-center text-base font-medium cursor-pointer'>
               <ChevronLeftIcon className='size-4 mr-2'/>
               Back
             </button>
           )}
           {currentCategories.map((category) => (
-            <button key={category.slug} onClick={() => handleCategoryClick(category)} className='w-full text-left p-4 hover:bg-black hover:text-white flex justify-between items-center text-base font-medium cursor-pointer'>
+            <button key={category.slug} onClick={() => handleCategoryClick(category)} className='w-full text-left p-4 hover:bg-gray-800 text-white flex justify-between items-center text-base font-medium cursor-pointer'>
               {category.name}
               {category.subcategories && category.subcategories.length > 0 && (
                 <ChevronRightIcon className='size-4' />

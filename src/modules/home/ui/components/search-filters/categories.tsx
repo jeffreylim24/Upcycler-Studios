@@ -90,11 +90,11 @@ export const Categories = ({ data, onOpenSidebar }: CatgoriesProps) => {
         ))}
 
         <div ref={viewAllRef} className='shrink-0'>
-          <Button 
+          <Button
             variant='elevated'
             className={cn(
-              "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black text-base",
-              isActiveCategoryHidden && !isAnyHovered && "bg-white border-primary"
+              "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-[#1a1a1a] hover:border-gray-700 text-white text-base",
+              isActiveCategoryHidden && !isAnyHovered && "bg-[#1a1a1a] border-gray-700"
             )}
             onClick={onOpenSidebar}
           >

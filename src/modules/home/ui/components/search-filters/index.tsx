@@ -10,7 +10,7 @@ import { BreadcrumbNavigation } from "./breadcrumb-navigation";
 import { Categories } from "./categories";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { SearchInput } from "./search-input";
-import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
+// import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
 
 export const SearchFilters = () => {
   const trpc = useTRPC();
@@ -23,7 +23,8 @@ export const SearchFilters = () => {
 
   const activeCategoryData = data.find((category) => category.slug === activeCategory);
 
-  const activeCategoryColor = activeCategoryData?.colour || DEFAULT_BACKGROUND_COLOR;
+  // const activeCategoryColor = activeCategoryData?.colour || DEFAULT_BACKGROUND_COLOR;
+  // Enable this when you want to use category colors
   const activeCategoryName = activeCategoryData?.name || null;
 
   const activeSubcategory = params.subcategory as string | undefined;
@@ -33,24 +34,24 @@ export const SearchFilters = () => {
     )?.name || null;
 
   return (
-    <div className='px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full' style={{ backgroundColor: activeCategoryColor }}>
-      <CategoriesSidebar 
-        open={isSidebarOpen} 
-        onOpenChange={setIsSidebarOpen} 
+    <div className='px-4 lg:px-12 py-8 border-b border-gray-800 flex flex-col gap-4 w-full bg-[#0a0a0a]'>
+      <CategoriesSidebar
+        open={isSidebarOpen}
+        onOpenChange={setIsSidebarOpen}
       />
-      <SearchInput 
+      <SearchInput
         onOpenSidebar={() => setIsSidebarOpen(true)}
       />
       <div className='hidden lg:block'>
-        <Categories 
-          data={data} 
+        <Categories
+          data={data}
           onOpenSidebar={() => setIsSidebarOpen(true)}
         />
       </div>
-      <BreadcrumbNavigation 
-        activeCategoryName={activeCategoryName} 
-        activeCategory={activeCategory} 
-        activeSubcategoryName={activeSubcategoryName} 
+      <BreadcrumbNavigation
+        activeCategoryName={activeCategoryName}
+        activeCategory={activeCategory}
+        activeSubcategoryName={activeSubcategoryName}
       />
     </div>
   );
@@ -58,7 +59,7 @@ export const SearchFilters = () => {
 
 export const SearchFiltersSkeleton = () => {
   return (
-    <div className='px-4 lg:px-12 py-8 border-b flex flex-col gap-4 w-full' style={{ backgroundColor: "#F5F5F5" }}>
+    <div className='px-4 lg:px-12 py-8 border-b border-gray-800 flex flex-col gap-4 w-full bg-[#0a0a0a]'>
       <SearchInput disabled onOpenSidebar={() => {}} />
       <div className='hidden lg:block'>
         <div className='h-11'/>
