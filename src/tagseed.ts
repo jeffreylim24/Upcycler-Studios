@@ -6,6 +6,7 @@ const tags = [
   { name: "Mens" },
   { name: "Womens" },
   { name: "Kids" },
+  { name: "Unisex"}
 ];
 
 const seed = async () => {

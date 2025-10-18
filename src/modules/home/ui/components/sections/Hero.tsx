@@ -6,13 +6,6 @@ import Spline from "@splinetool/react-spline";
 export const Hero = () => {
   return (
     <section className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-black text-center">
-      {/* Grain overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none z-10"
-        style={{
-          backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="0.5" fill="%23ffffff" opacity="0.02"/><circle cx="75" cy="75" r="0.3" fill="%23ffffff" opacity="0.01"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>')`,
-        }}
-      />
 
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center justify-center w-full max-w-[1400px] px-8">
