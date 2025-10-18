@@ -10,7 +10,7 @@ import { BreadcrumbNavigation } from "./breadcrumb-navigation";
 import { Categories } from "./categories";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { SearchInput } from "./search-input";
-import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
+// import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
 
 export const SearchFilters = () => {
   const trpc = useTRPC();
