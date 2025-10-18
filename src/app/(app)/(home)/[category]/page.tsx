@@ -6,6 +6,8 @@ import { getQueryClient, trpc } from "@/trpc/server";
 import { loadProductFilters } from "@/modules/products/search-params";
 import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { DEFAULT_LIMIT } from "@/constants";
+import { SearchFiltersSkeleton, SearchFilters } from "@/modules/home/ui/components/search-filters";
+import { Suspense } from "react";
 
 interface Props {
   params: Promise<{
@@ -36,6 +38,9 @@ const Page = async ({ params, searchParams }: Props) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
+      <Suspense fallback={<SearchFiltersSkeleton />}>
+        <SearchFilters />
+      </Suspense>
       <ProductListView category={category} />
     </HydrationBoundary>
   );

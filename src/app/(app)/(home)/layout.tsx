@@ -27,14 +27,8 @@ const Layout = async ({ children }: Props) => {
       {/* Navbar - Fixed at top */}
       <Navbar />
 
-      <div className='h-13'/> // Padding to offset fixed navbar, can possibly find a better way
-
-      {/* Search Filters - Below navbar */}
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense fallback={<SearchFiltersSkeleton />}>
-          <SearchFilters />
-        </Suspense>
-      </HydrationBoundary>
+      {/* Padding to offset fixed navbar, can possibly find a better way */}
+      <div className='h-18 bg-black'/> 
 
       {/* Main content */}
       <div className="flex-1 bg-[#f4f4f0]">
