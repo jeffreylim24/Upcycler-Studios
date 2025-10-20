@@ -11,9 +11,10 @@ interface Props {
     items: NavbarItem[];
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    session?: { user: { email: string } | null } | undefined;
 }
 
-export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
+export const NavbarSidebar = ({ items, open, onOpenChange, session }: Props) => {
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
             <SheetContent side="left" className="p-0 transition-none">
@@ -29,12 +30,20 @@ export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
                         </Link>
                     ))}
                     <div className="border-t">
-                        <Link href="/login" className="w-full text-left p-4 hover:bg-black hover:text-white flex item-center text-base font-medium" onClick={() => onOpenChange(false)}>
-                            Log In
-                        </Link>
-                        <Link href="signup" className="w-full text-left p-4 hover:bg-black hover:text-white flex item-center text-base font-medium" onClick={() => onOpenChange(false)}>
-                            Start Selling
-                        </Link>
+                        {session?.user ? (
+                            <Link href="/admin" className="w-full text-left p-4 hover:bg-black hover:text-white flex item-center text-base font-medium" onClick={() => onOpenChange(false)}>
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <>
+                                <Link href="/login" className="w-full text-left p-4 hover:bg-black hover:text-white flex item-center text-base font-medium" onClick={() => onOpenChange(false)}>
+                                    Log In
+                                </Link>
+                                <Link href="/signup" className="w-full text-left p-4 hover:bg-black hover:text-white flex item-center text-base font-medium" onClick={() => onOpenChange(false)}>
+                                    Start Selling
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </ScrollArea>
             </SheetContent>
