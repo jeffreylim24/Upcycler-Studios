@@ -7,23 +7,17 @@ import { stripe } from "@/lib/stripe";
 import { ExpandedLineItem } from "@/modules/checkout/types";
 
 export async function POST(req: Request) {
-  console.log("🔄 Webhook received - starting processing");
-  
   let event: Stripe.Event;
 
   try {
     const body = await req.text();
     const sig = req.headers.get("stripe-signature");
 
-    console.log("📝 Signature check:", !!sig);
-
     if (!sig) {
-      console.log("❌ No Stripe signature found");
       throw new Error("No Stripe signature found");
     }
 
     if (!process.env.STRIPE_WEBHOOK_SECRET) {
-      console.log("❌ No webhook secret configured");
       throw new Error("Webhook secret not configured");
     }
 
@@ -32,11 +26,9 @@ export async function POST(req: Request) {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET,
     );
-    
-    console.log("✅ Webhook signature verified, event type:", event.type);
+
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.log(`⚠️ Webhook signature verification failed:`, errorMessage);
     
     return NextResponse.json(
       { message: `Webhook Error: ${errorMessage}` }, 
@@ -52,7 +44,6 @@ export async function POST(req: Request) {
   ];
 
   if (!permittedEvents.includes(event.type)) {
-    console.log("⚠️ Event type not permitted:", event.type);
     return NextResponse.json(
       { message: "Event type not handled" }, 
       { status: 200 }
@@ -62,33 +53,24 @@ export async function POST(req: Request) {
   try {
     let data;
     const payload = await getPayload({ config });
-    console.log("✅ Payload instance created");
 
     switch (event.type) {
       case "checkout.session.completed": {
         data = event.data.object as Stripe.Checkout.Session;
-        console.log("🛒 Processing checkout session:", data.id);
-        console.log("📋 Session metadata:", data.metadata);
 
         if (!data.metadata?.userId) {
-          console.log("❌ No user ID found in metadata");
           throw new Error("No user ID found in metadata");
         }
 
-        console.log("👤 Looking up user:", data.metadata.userId);
         const user = await payload.findByID({
           collection: "users",
           id: data.metadata.userId,
         });
 
         if (!user) {
-          console.log("❌ User not found:", data.metadata.userId);
           throw new Error("User not found");
         }
 
-        console.log("✅ User found:", user.id);
-
-        console.log("🔍 Retrieving expanded session...");
         const expandedSession = await stripe.checkout.sessions.retrieve(
           data.id,
           {
@@ -100,31 +82,60 @@ export async function POST(req: Request) {
         );
 
         if (!expandedSession.line_items?.data || !expandedSession.line_items?.data.length) {
-          console.log("❌ No line items found");
           throw new Error("No line items found");
         }
 
         const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
-        console.log("📦 Processing", lineItems.length, "line items");
 
         for (const item of lineItems) {
-          console.log("🔨 Creating order for product:", item.price.product.metadata.id);
-          
-          const order = await payload.create({
+
+          const productId = item.price.product.metadata.id;
+
+          // Fetch current product to check stock
+          const product = await payload.findByID({
+            collection: "products",
+            id: productId,
+          });
+
+          if (!product) {
+            throw new Error(`Product not found: ${productId}`);
+          }
+
+          // Validate stock field exists
+          if (typeof product.stock !== 'number') {
+            throw new Error(`Product missing stock field: ${product.name}`);
+          }
+
+          // Check if product has sufficient stock
+          if (product.stock <= 0) {
+            throw new Error(`Product out of stock: ${product.name}`);
+          }
+
+          // Create the order
+          await payload.create({
             collection: "orders",
             data: {
               stripeCheckoutSessionId: data.id,
               stripeAccountId: event.account,
               user: user.id,
-              product: item.price.product.metadata.id,
+              product: productId,
               name: item.price.product.name,
             },
           });
-          
-          console.log("✅ Order created:", order.id);
+
+          // Calculate new stock value
+          const newStock = product.stock - 1;
+
+          // Update stock
+          await payload.update({
+            collection: "products",
+            id: productId,
+            data: {
+              stock: newStock,
+            },
+          });
         }
         
-        console.log(`🎉 All orders created successfully for session: ${data.id}`);
         break;
       }
       case "account.updated": {
@@ -138,22 +149,18 @@ export async function POST(req: Request) {
           data: { stripeDetailsSubmitted: data.details_submitted },
         })
 
-        console.log("✅ Tenant updated for account:", data.id);
         break;
       }
       default:
-        console.log("❌ Unhandled event type:", event.type);
         throw new Error(`Unhandled event: ${event.type}`);
     }
   } catch (error) {
-    console.log("❌ Webhook handler error:", error);
     return NextResponse.json(
       { message: "Webhook handler failed" }, 
       { status: 500 }
     );
   }
 
-  console.log("✅ Webhook processed successfully");
   return NextResponse.json(
     { message: "Received" }, 
     { status: 200 }

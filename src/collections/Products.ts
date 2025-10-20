@@ -97,6 +97,16 @@ export const Products: CollectionConfig = {
       admin: {
         description: 'If checked, this product will be archived.',
       }
+    },
+    {
+      name: 'stock',
+      type: 'number',
+      required: true,
+      defaultValue: 1,
+      min: 0,
+      admin: {
+        description: 'Available inventory for this product. Automatically decrements on purchase. Set to 0 to mark as out of stock.',
+      }
     }
   ],
 } 

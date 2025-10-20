@@ -115,7 +115,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             <div className='border-t border-gray-700 lg:border-t-0 lg:border-l lg:border-gray-700 h-full'>
               <div className='flex flex-col gap-4 p-6 border-b border-gray-700'>
                 <div className='flex flex-row items-center gap-2'>
-                  <CartButton isPurchased={data.isPurchased} tenantSlug={tenantSlug} productId={productId} />
+                  <CartButton isPurchased={data.isPurchased} tenantSlug={tenantSlug} productId={productId} stock={data.stock} />
                   <Button
                     className='size-12 bg-[#1a1a1a] border-gray-700 text-white hover:bg-gray-800'
                     variant='elevated'
