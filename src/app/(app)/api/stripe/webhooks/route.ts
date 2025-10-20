@@ -36,8 +36,6 @@ export async function POST(req: Request) {
     );
   }
 
-  console.log("🔄 Processing event:", event.type, "ID:", event.id);
-
   const permittedEvents: string[] = [
     "checkout.session.completed",
     "account.updated",
@@ -88,30 +86,49 @@ export async function POST(req: Request) {
         const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
 
         for (const item of lineItems) {
-
           const productId = item.price.product.metadata.id;
 
-          // Fetch current product to check stock
-          const product = await payload.findByID({
-            collection: "products",
-            id: productId,
-          });
+          // Atomically decrement stock only if stock > 0
+          // This prevents TOCTOU race conditions in concurrent webhooks
+          const result = await payload.db.collections.products?.findOneAndUpdate(
+            {
+              _id: productId,
+              stock: { $gt: 0 }, // Only update if stock is greater than 0
+            },
+            {
+              $inc: { stock: -1 }, // Atomically decrement stock by 1
+            },
+            {
+              returnDocument: 'after', // Return the updated document
+            }
+          );
 
-          if (!product) {
-            throw new Error(`Product not found: ${productId}`);
-          }
+          // If no document was updated, product is either out of stock or doesn't exist
+          if (!result) {
+            // Fetch product to provide better error message
+            const product = await payload.findByID({
+              collection: "products",
+              id: productId,
+            });
 
-          // Validate stock field exists
-          if (typeof product.stock !== 'number') {
-            throw new Error(`Product missing stock field: ${product.name}`);
-          }
+            if (!product) {
+              console.log("❌ Product not found:", productId);
+              throw new Error(`Product not found: ${productId}`);
+            }
 
-          // Check if product has sufficient stock
-          if (product.stock <= 0) {
+            if (typeof product.stock !== 'number') {
+              console.log("❌ Product missing stock field:", productId);
+              throw new Error(`Product missing stock field: ${product.name}`);
+            }
+
+            console.log("❌ Product out of stock during atomic decrement:", productId);
             throw new Error(`Product out of stock: ${product.name}`);
           }
 
-          // Create the order
+          console.log("✅ Stock atomically decremented for product:", productId, "New stock:", result.stock);
+
+          // Only create order AFTER successful stock decrement
+          // This ensures no orphaned orders if stock update fails
           await payload.create({
             collection: "orders",
             data: {
@@ -123,17 +140,7 @@ export async function POST(req: Request) {
             },
           });
 
-          // Calculate new stock value
-          const newStock = product.stock - 1;
-
-          // Update stock
-          await payload.update({
-            collection: "products",
-            id: productId,
-            data: {
-              stock: newStock,
-            },
-          });
+          console.log("✅ Order created for product:", productId);
         }
         
         break;
