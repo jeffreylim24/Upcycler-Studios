@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const Featured = () => {
   return (
-    <section className="py-32 bg-black" id="shop">
+    <section className="py-32 bg-black" id="featured">
       <div className="max-w-6xl mx-auto px-4">
         <h2 className="text-5xl font-semibold text-center mb-16 tracking-tight text-white">
           Curated Collections

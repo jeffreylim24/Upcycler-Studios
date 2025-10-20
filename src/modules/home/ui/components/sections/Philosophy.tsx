@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const Philosophy = () => {
   return (
-    <section className="relative py-32 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/background-2.png)' }}>
+    <section id="philosophy" className="relative py-32 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/background-2.png)' }}>
       <div className="absolute inset-0 bg-black/70"></div>
       <div className="relative max-w-[1200px] mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
