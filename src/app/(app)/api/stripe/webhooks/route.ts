@@ -155,8 +155,9 @@ export async function POST(req: Request) {
         throw new Error(`Unhandled event: ${event.type}`);
     }
   } catch (error) {
+    console.log("❌ Webhook handler error:", error);
     return NextResponse.json(
-      { message: "Webhook handler failed" }, 
+      { message: "Webhook handler failed" },
       { status: 500 }
     );
   }
