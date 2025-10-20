@@ -26,10 +26,11 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
     hasNextPage, 
     isFetchingNextPage, 
     fetchNextPage 
-  } = useSuspenseInfiniteQuery(trpc.products.getMany.infiniteQueryOptions( 
+  } = useSuspenseInfiniteQuery(trpc.products.getMany.infiniteQueryOptions(
     {
       category,
       tenantSlug,
+      search: filters.search,
       minPrice: filters.minPrice !== null && filters.minPrice !== undefined && filters.minPrice !== '' ? Number(filters.minPrice) : null,
       maxPrice: filters.maxPrice !== null && filters.maxPrice !== undefined && filters.maxPrice !== '' ? Number(filters.maxPrice) : null,
       tags: filters.tags,
