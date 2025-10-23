@@ -90,6 +90,20 @@ export const checkoutRouter = createTRPCRouter({
         });
       }
 
+      // Validate stock availability for all products
+      const outOfStockProducts = products.docs.filter(product => {
+        const stock = product.stock ?? 0;
+        return stock <= 0;
+      });
+
+      if (outOfStockProducts.length > 0) {
+        const productNames = outOfStockProducts.map(p => p.name).join(', ');
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `The following products are out of stock: ${productNames}`,
+        });
+      }
+
       const tenantsData = await ctx.payload.find({
         collection: "tenants",
         limit: 1,
