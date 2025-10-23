@@ -112,20 +112,15 @@ export async function POST(req: Request) {
             });
 
             if (!product) {
-              console.log("❌ Product not found:", productId);
               throw new Error(`Product not found: ${productId}`);
             }
 
             if (typeof product.stock !== 'number') {
-              console.log("❌ Product missing stock field:", productId);
               throw new Error(`Product missing stock field: ${product.name}`);
             }
 
-            console.log("❌ Product out of stock during atomic decrement:", productId);
             throw new Error(`Product out of stock: ${product.name}`);
           }
-
-          console.log("✅ Stock atomically decremented for product:", productId, "New stock:", result.stock);
 
           // Only create order AFTER successful stock decrement
           // This ensures no orphaned orders if stock update fails
@@ -139,8 +134,6 @@ export async function POST(req: Request) {
               name: item.price.product.name,
             },
           });
-
-          console.log("✅ Order created for product:", productId);
         }
         
         break;
