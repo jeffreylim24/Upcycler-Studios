@@ -82,7 +82,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="block text-base text-black mb-1">Size</label>
+          <label className="block text-base text-black mb-0">Size</label>
           <div className="relative w-24">
             <select 
               defaultValue="S"
@@ -99,6 +99,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
               </svg>
             </span>
           </div>
+          <div className="text-sm text-green-700">In Stock</div>
         </div>
         <Button className="bg-black text-white rounded-lg w-full py-3 mt-2 font-semibold hover:bg-gray-900 transition">
           Add to cart
