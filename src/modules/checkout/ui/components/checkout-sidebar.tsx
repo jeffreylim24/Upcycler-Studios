@@ -11,32 +11,30 @@ interface CheckoutSidebarProps {
 
 export const CheckoutSidebar = ({ total, onPurchase, disabled, isCanceled }: CheckoutSidebarProps) => {
   return (
-    <div className='border rounded-md overflow-hidden bg-white flex flex-col'>
-      <div className='flex items-center justify-between p-4 border-b'>
-        <h4 className='font-medium text-lg'>Total</h4>
-        <p className='font-medium text-lg'>{formatCurrency(total)}</p>
+    <div className="bg-black rounded-xl overflow-hidden flex flex-col font-sans" style={{ fontFamily: 'Inter, sans-serif' }}>
+      <div className="flex items-center justify-between p-6 border-b border-white/10">
+        <h4 className="font-semibold text-lg text-white">Total</h4>
+        <p className="font-bold text-lg text-white">{formatCurrency(total)}</p>
       </div>
-      <div className='p-4 flex items-center justify-center'>
-        <Button 
-          variant='elevated' 
-          disabled={disabled} 
-          onClick={onPurchase} 
-          size='lg' 
-          className='text-base w-full text-white bg-primary hover:bg-pink-300 hover:text-primary'
+      <div className="p-6 flex items-center justify-center">
+        <Button
+          variant="elevated"
+          disabled={disabled}
+          onClick={onPurchase}
+          size="lg"
+          className="text-base w-full bg-white text-black rounded-lg font-semibold hover:bg-gray-100 hover:text-black transition"
         >
           Checkout
         </Button>
       </div>
       {isCanceled && (
-        <div className='p-4 flex justify-center items-center border-t'>
-          <div className='bg-red-100 border border-red-400 font-medium px-4 py-3 rounded flex items-center w-full'>
-            <div className='flex items-center'>
-              <CircleXIcon className='size-6 mr-2 fill-red-500 text-red-100' />
-              <span>Checkout failed. Please try again.</span>
-            </div>
+        <div className="p-4 flex justify-center items-center border-t border-white/10">
+          <div className="bg-red-100 border border-red-400 font-medium px-4 py-3 rounded-lg flex items-center w-full">
+            <CircleXIcon className="size-6 mr-2 text-red-500" />
+            <span className="text-black">Checkout failed. Please try again.</span>
           </div>
         </div>
       )}
     </div>
-  )
-}
+  );
+};
