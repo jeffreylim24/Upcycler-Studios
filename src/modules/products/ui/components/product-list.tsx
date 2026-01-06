@@ -17,30 +17,8 @@ interface Props {
   narrowView?: boolean;
 }
 
-// Mock product data for front-end development
-const MOCK_PRODUCTS = [
-  {
-    id: '1',
-    name: "Nike Upcycled Crew Neck",
-    price: 50,
-    image: { url: "/reworked_nike_navy.png" },
-    tenant: { slug: 'upcycler-studios', image: { url: "/upcycler_logo.png" } },
-    reviewRating: 4.5,
-    reviewCount: 10,  
-  },
-  {
-    id: '2',
-    name: "Nike Air Tee",
-    price: 15,
-    image: { url: "/nike_air_tee.jpg" },
-    tenant: { slug: 'upcycler-studios', image: { url: "/upcycler_logo.png" } },
-    reviewRating: 4.0,
-    reviewCount: 8,
-  },
-];
-
 export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
-  /*const [filters] = useProductFilters();
+  const [filters] = useProductFilters();
 
   const trpc = useTRPC();
   const { 
@@ -72,14 +50,12 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
         <p className='text-base font-medium text-gray-300'>No products found</p>
       </div>
     )
-  } */
+  }
 
-  const products = MOCK_PRODUCTS; // Use mock data for now
-
-  /* return (
+  return (
     <>
       <div className={cn(
-        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4',
+        'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6',
         narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
       )}>
         {data?.pages.flatMap((page) => page.docs).map((product) => (
@@ -109,29 +85,7 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
         )}
       </div>
     </>
-  )*/;
-  return (
-  <>
-    <div className={cn(
-      'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8',
-      narrowView && "lg:grid-cols-2 xl:grid-cols-3"
-    )}>
-      {products.map((product) => (
-        <ProductCard 
-          key={product.id}
-          id={product.id}
-          name={product.name}
-          imageUrl={product.image?.url}
-          tenantSlug={product.tenant?.slug}
-          tenantImageUrl={product.tenant?.image?.url}
-          reviewRating={product.reviewRating}
-          reviewCount={product.reviewCount}
-          price={product.price}
-        />
-      ))}
-    </div>
-  </>
-)
+  );
 }
 
 export const ProductListSkeleton = ({ narrowView }: Props) => { 

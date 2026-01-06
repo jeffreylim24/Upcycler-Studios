@@ -1,8 +1,6 @@
 import { ChangeEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 
 interface Props {
   minPrice?: string | null;
@@ -61,20 +59,6 @@ export const PriceFilter = ({ minPrice, maxPrice, onMinPriceChange, onMaxPriceCh
     <div className='flex flex-col gap-4'>
       <Label className='font-medium text-base text-white'>Price Range</Label>
       <div className='px-2'>
-        <Slider
-          range
-          min={min}
-          max={max}
-          value={valuePair}
-          onChange={handleSlider}
-          allowCross={false}
-          pushable={1} 
-          trackStyle={[{ backgroundColor: '#888' }]}
-          handleStyle={[
-            { borderColor: '#fff', backgroundColor: '#222' },
-            { borderColor: '#4A90E2', backgroundColor: '#222' }
-          ]}
-        />
         <div className='flex justify-between text-xs text-gray-300 mt-2'>
           <span>{formatAsCurrency(String(valuePair[0]))}</span>
           <span>{formatAsCurrency(String(valuePair[1]))}</span>
