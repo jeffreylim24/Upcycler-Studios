@@ -1,9 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { StarIcon } from "lucide-react";
-
+import { ShoppingBag } from "lucide-react";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   id: string;
@@ -21,9 +20,6 @@ export const ProductCard = ({
   name, 
   imageUrl, 
   tenantSlug, 
-  tenantImageUrl, 
-  reviewRating, 
-  reviewCount, 
   price 
 }: ProductCardProps) => {
   const router = useRouter();
@@ -36,54 +32,42 @@ export const ProductCard = ({
   }
 
   return (
-
     <Link href={`${generateTenantURL(tenantSlug)}/products/${id}`}>
-    <div className='hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.1)] transition-shadow border border-gray-700 rounded-md bg-[#1a1a1a] overflow-hidden h-full flex flex-col'>
-      <div className='relative aspect-square'>
-        <Image
-          alt={name}
-          fill
-          src={imageUrl || '/placeholder-image.jpg'}
-          className='object-cover'
-        />
-      </div>
-      <div className='p-4 border-y border-gray-700 flex flex-col gap-3 flex-1'>
-        <h2 className='text-lg font-medium line-clamp-4 text-white'>{name}</h2>
-        <div className='flex items-center gap-2' onClick={handleUserClick}>
-          {tenantImageUrl && (
-            <Image
-              alt={tenantSlug}
-              src={tenantImageUrl}
-              width={16}
-              height={16}
-              className='rounded-full border border-gray-700 shrink-0 size-[16px]'
-            />
-          )}
-          <p className='text-sm underline font-medium text-gray-300'>{tenantSlug}</p>
+      <div className="group cursor-pointer">
+        {/* Square product image */}
+        <div className="relative aspect-square bg-zinc-900 mb-4 overflow-hidden rounded-xl max-w-md">
+          <Image
+            alt={name}
+            src={imageUrl || '/placeholder-image.jpg'}
+            fill
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          {/* Shopping bag button appears on hover */}
+          <button className="absolute bottom-4 right-4 bg-white text-black p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-zinc-200 rounded-lg">
+            <ShoppingBag size={20} />
+          </button>
         </div>
-        {reviewCount > 0 && (
-          <div className='flex items-center gap-1'>
-            <StarIcon className='size-3.5 fill-yellow-400' />
-            <p className='text-sm font-medium text-gray-300'>
-              {reviewRating} ({reviewCount})
-            </p>
+        
+        {/* Product info */}
+        <div className="space-y-1">
+          <div onClick={handleUserClick} className="text-zinc-400 hover:text-white">
+            <p className="uppercase tracking-wider text-xs">{tenantSlug}</p>
           </div>
-        )}
-      </div>
-      <div className='p-4'>
-        <div className='relative px-2 py-1 border border-gray-700 bg-white text-black w-fit'>
-          <p className='text-sm font-medium'>
-            {formatCurrency(price)}
-          </p>
+          <h3 className="text-white font-semibold text-lg">{name}</h3>
+          <p className="text-white text-sm">{formatCurrency(price)}</p>
         </div>
       </div>
-    </div>
-  </Link>
+    </Link>
   )
-}
+}; 
 
-export const ProductCardSkeleton = () => {
-  return (
-    <div className='w-full aspect-3/4 bg-neutral-800 rounded-lg animate-pulse' />
-  )
-}
+export const ProductCardSkeleton = () => (
+  <div className="animate-pulse">
+    <div className="aspect-square bg-zinc-800 mb-4 rounded-xl" />
+    <div className="space-y-2">
+      <div className="h-3 bg-zinc-800 rounded w-1/3" />
+      <div className="h-4 bg-zinc-800 rounded w-2/3" />
+      <div className="h-3 bg-zinc-800 rounded w-1/4" />
+    </div>
+  </div>
+);

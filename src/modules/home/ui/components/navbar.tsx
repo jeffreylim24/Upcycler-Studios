@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { MenuIcon } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
@@ -25,32 +25,9 @@ const NavbarItem = ({
   children,
   isActive = false,
 }: NavbarItemProps) => {
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (href === '/#featured' || href === '/#philosophy') {
-      e.preventDefault();
-
-      const sectionId = href === '/#featured' ? 'featured' : 'philosophy';
-
-      if (pathname === '/') {
-        // Already on home page, just scroll to section
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      } else {
-        // Navigate to home page with hash
-        router.push(href);
-      }
-    }
-  };
-
   return (
     <Link
       href={href}
-      onClick={handleClick}
       className={cn(
         "text-white/70 hover:text-white transition-colors tracking-wide relative",
         isActive && "text-white after:absolute after:-bottom-2 after:left-0 after:w-full after:h-px after:bg-white after:content-['']"
@@ -63,8 +40,8 @@ const NavbarItem = ({
 
 const navbarItems = [
   { href: "/", children: "Home" },
-  { href: "/#featured", children: "Featured" },
-  { href: "/#philosophy", children: "About" },
+  { href: "/featured", children: "Featured" },
+  { href: "/about", children: "About" },
   { href: "/all", children: "Shop Now" },
 ]
 

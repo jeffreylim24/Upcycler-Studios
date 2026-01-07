@@ -1,19 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-
 import { StarRating } from '@/components/star-rating';
-import { formatCurrency, generateTenantURL } from '@/lib/utils';
+import { formatCurrency } from '@/lib/utils';
 import { useTRPC } from '@/trpc/client';
 import { Button } from '@/components/ui/button';
-import { CheckIcon, LinkIcon, StarIcon } from 'lucide-react';
-import { Fragment, useState } from 'react';
-import { Progress } from '@/components/ui/progress';
-import { toast } from 'sonner';
 
 const CartButton = dynamic(
   () => import('../components/cart-button').then(
@@ -25,7 +19,6 @@ const CartButton = dynamic(
   }
 );
 
-
 interface ProductViewProps {
   productId: string;
   tenantSlug: string;
@@ -35,133 +28,73 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
 
-  const [isCopied, setIsCopied] = useState(false);
-
   return (
-    <div className='px-4 lg:px-12 py-10'>
-      <div className='border border-gray-700 rounded-sm bg-[#1a1a1a] overflow-hidden'>
-        <div className='relative aspect-[3.9] border-b border-gray-700'>
+    <div className="bg-white rounded-xl shadow-lg p-12 max-w-5xl mx-auto flex flex-col md:flex-row gap-12">
+      {/* Left: Image and favorite icon */}
+      <div className="flex-1 flex items-start">
+        <div className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden">
           <Image
             src={data.image?.url || '/placeholder-image.jpg'}
             alt={data.name}
             fill
-            className='object-cover'
+            className="object-cover"
+            priority
           />
+          <button className="absolute top-4 left-4 bg-black text-white rounded-full p-2 shadow">
+            {/* TODO: Implement favorite functionality */}
+            {/* Heart icon */}
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
+              <path d="M10 17l-1.45-1.32C4.4 11.36 2 9.28 2 6.5 2 4.5 3.5 3 5.5 3c1.54 0 3.04.99 3.57 2.36h1.87C11.46 3.99 12.96 3 14.5 3 16.5 3 18 4.5 18 6.5c0 2.78-2.4 4.86-6.55 9.18L10 17z"/>
+            </svg>
+          </button>
         </div>
-        <div className='grid grid-cols-1 lg:grid-cols-6'>
-          <div className='col-span-4'>
-            <div className='p-6'>
-              <h1 className='text-4xl font-medium text-white'>{data.name}</h1>
-            </div>
-            <div className='border-y border-gray-700 flex'>
-              <div className='px-6 py-4 flex items-center justify-center border-r border-gray-700'>
-                <div className='relative px-2 py-1 border border-gray-700 bg-white text-black w-fit'>
-                  <p className='text-base font-medium'>{formatCurrency(data.price)}</p>
-                </div>
-              </div>
+      </div>
 
-              <div className='px-6 py-4 flex items-center justify-center lg:border-r lg:border-gray-700'>
-                <Link href={generateTenantURL(tenantSlug)} className='flex items-center gap-2'>
-                  {data.tenant.image?.url && (
-                    <Image
-                      alt={data.tenant.name}
-                      src={data.tenant.image?.url}
-                      width={24}
-                      height={24}
-                      className='rounded-full border border-gray-700 shrink-0 size-[20px]'
-                    />
-                  )}
-                  <p className='text-base underline font-medium text-white'>
-                    {data.tenant.name}
-                  </p>
-                </Link>
-              </div>
-
-              <div className='hidden lg:flex px-6 py-4 items-center justify-center'>
-                <div className='flex items-center gap-2'>
-                  <StarRating
-                    rating={data.reviewRating}
-                    iconClassName='size-4'
-                  />
-                  <p className='text-base font-medium text-white'>
-                    {data.reviewCount} ratings
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className='block lg:hidden px-6 py-4 items-center justify-center border-b border-gray-700'>
-              <div className='flex items-center gap-2'>
-                  <StarRating
-                    rating={data.reviewRating}
-                    iconClassName='size-4'
-                  />
-                  <p className='text-base font-medium text-white'>
-                    {data.reviewCount} ratings
-                  </p>
-                </div>
-            </div>
-
-            <div className='p-6 text-white'>
-              {data.description ? (
-                <RichText data={data.description as unknown as import("lexical").SerializedEditorState<import("lexical").SerializedLexicalNode>}/>
-              ) : (
-                <p className='font-medium text-gray-400 italic'>No description provided.</p>
-              )}
-            </div>
-          </div>
-
-          <div className='col-span-2'>
-            <div className='border-t border-gray-700 lg:border-t-0 lg:border-l lg:border-gray-700 h-full'>
-              <div className='flex flex-col gap-4 p-6 border-b border-gray-700'>
-                <div className='flex flex-row items-center gap-2'>
-                  <CartButton isPurchased={data.isPurchased} tenantSlug={tenantSlug} productId={productId} stock={data.stock} />
-                  <Button
-                    className='size-12 bg-[#1a1a1a] border-gray-700 text-white hover:bg-gray-800'
-                    variant='elevated'
-                    onClick={() => {
-                      setIsCopied(true);
-                      navigator.clipboard.writeText(window.location.href);
-                      toast.success("URL Copied to clipboard!");
-
-                      setTimeout(() => {
-                        setIsCopied(false);
-                      }, 1000)
-                    }}
-                    disabled={isCopied}
-                  >
-                    {isCopied ? <CheckIcon /> : <LinkIcon />}
-                  </Button>
-                </div>
-              </div>
-
-              <div className='p-6'>
-                <div  className='flex items-center justify-between'>
-                  <h3 className='text-xl font-medium text-white'>Ratings</h3>
-                  <div className='flex items-center gap-x-1 font-medum text-white'>
-                    <StarIcon className='size-4 fill-yellow-400' />
-                    <p>({data.reviewRating})</p>
-                    <p className='text-base'>({data.reviewCount} ratings)</p>
-                  </div>
-                </div>
-
-                <div className='grid grid-cols-[auto_1fr_auto] gap-3 mt-4 text-white'>
-                  {[5, 4, 3, 2, 1].map((stars) => (
-                    <Fragment key={stars}>
-                      <div className='font-medium'>
-                        {stars} {stars === 1 ? 'star' : 'stars'}
-                      </div>
-                      <Progress value={data.ratingDistribution[stars]} className='h-[1lh]'/>
-                      <div className='font-medium'>
-                        {data.ratingDistribution[stars]}%
-                      </div>
-                    </Fragment>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Right: Product info */}
+      <div className="flex-1 flex flex-col gap-6 justify-center">
+        <h1 className="text-3xl font-bold text-black">{data.name}</h1>
+        <div className="flex items-end gap-2">
+          <span className="text-5xl font-bold text-black">{formatCurrency(data.price)}</span>
         </div>
+        <div className="flex items-center gap-3">
+          <StarRating rating={data.reviewRating} iconClassName="size-5" />
+          <span className="text-base text-gray-600 font-medium">
+            {data.reviewRating} ({data.reviewCount} ratings)
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="block text-base text-black mb-0">Size</label>
+          <div className="relative w-24">
+            {/* TODO: Implement size stock into products */}
+            <select 
+              defaultValue="S"
+              className="border border-gray-300 rounded-lg w-24 p-2 text-black bg-white appearance-none pr-8"
+            >
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+            </select>
+            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 8l4 4 4-4"/>
+              </svg>
+            </span>
+          </div>
+          {/* TODO: Implement size stock into products */}
+          <div className="text-sm text-green-700">In Stock</div>
+        </div>
+        <CartButton className="bg-black text-white rounded-lg w-full py-3 mt-2 font-semibold hover:bg-gray-900 transition" isPurchased={data.isPurchased} tenantSlug={tenantSlug} productId={productId} />
+        <details className="mt-4 border-gray-500 rounded-lg bg-white">
+          <summary className="cursor-pointer px-4 py-2 font-medium text-black">Description</summary>
+          <div className="px-4 py-2 text-gray-700">
+            {data.description ? (
+              <RichText data={data.description as unknown as import("lexical").SerializedEditorState<import("lexical").SerializedLexicalNode>}/>
+            ) : (
+              <span className="italic text-gray-400">No description provided.</span>
+            )}
+          </div>
+        </details>
       </div>
     </div>
   )
@@ -169,15 +102,35 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 
 export const ProductViewSkeleton = () => {
   return (
-    <div className='px-4 lg:px-12 py-10'>
-      <div className='border border-gray-700 rounded-sm bg-[#1a1a1a] overflow-hidden'>
-        <div className='relative aspect-[3.9] border-b border-gray-700'>
-          <Image
-            src={'/placeholder.png'}
-            alt='Placeholder'
-            fill
-            className='object-cover'
-          />
+    <div className="bg-white rounded-xl shadow-lg p-12 max-w-5xl mx-auto flex flex-col md:flex-row gap-12">
+      {/* Left: Image skeleton */}
+      <div className="flex-1 flex items-start">
+        <div className="relative w-full aspect-square bg-gray-200 rounded-lg overflow-hidden animate-pulse" />
+      </div>
+      {/* Right: Info skeleton */}
+      <div className="flex-1 flex flex-col gap-6 justify-center">
+        <div className="h-8 w-2/3 bg-gray-200 rounded animate-pulse" />
+        <div className="flex items-end gap-2">
+          <div className="h-6 w-6 bg-gray-200 rounded animate-pulse" />
+          <div className="h-12 w-32 bg-gray-200 rounded animate-pulse" />
+        </div>
+        <div className="h-5 w-40 bg-gray-200 rounded animate-pulse" />
+        <div className="h-5 w-24 bg-gray-200 rounded animate-pulse" />
+        <div className="flex gap-6">
+          <div className="h-10 w-40 bg-gray-200 rounded-lg animate-pulse" />
+          <div className="h-10 w-40 bg-gray-200 rounded-lg animate-pulse" />
+        </div>
+        <div className="h-12 w-full bg-gray-200 rounded-lg animate-pulse" />
+        <div className="h-24 w-full bg-gray-200 rounded-lg animate-pulse mt-4" />
+        <div className="mt-6">
+          <div className="h-6 w-24 bg-gray-200 rounded animate-pulse mb-2" />
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="flex items-center gap-3 mb-2">
+              <div className="h-4 w-16 bg-gray-200 rounded animate-pulse" />
+              <div className="h-2 w-40 bg-gray-200 rounded animate-pulse flex-1" />
+              <div className="h-4 w-8 bg-gray-200 rounded animate-pulse" />
+            </div>
+          ))}
         </div>
       </div>
     </div>

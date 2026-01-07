@@ -8,17 +8,18 @@ interface Props {
   tenantSlug: string;
   productId: string;
   isPurchased?: boolean;
+  className?: string;
   stock?: number;
 }
 
-export const CartButton = ({ tenantSlug, productId, isPurchased, stock }: Props) => {
+export const CartButton = ({ tenantSlug, productId, isPurchased, stock, className }: Props) => {
   const cart = useCart(tenantSlug);
   const currentStock = stock ?? 1;
   const isOutOfStock = currentStock <= 0;
 
   if (isPurchased) {
     return (
-      <Button variant='elevated' className='flex-1 size-12 font-medium bg-[#1a1a1a] border-gray-700 text-white hover:bg-gray-800' asChild>
+      <Button className={cn('flex-1 size-12 font-medium bg-[#1a1a1a] border-gray-700 text-white hover:bg-gray-800', className)} asChild>
         <Link prefetch href={`/library/${productId}`}>
           View in Library
         </Link>
@@ -35,7 +36,7 @@ export const CartButton = ({ tenantSlug, productId, isPurchased, stock }: Props)
   }
 
   return (
-    <Button variant='elevated' className={cn('flex-1 size-12 bg-[#1a1a1a] border-gray-700 text-white hover:bg-gray-800')} onClick={() => cart.toggleProduct(productId)}>
+    <Button className={cn('flex-1 size-12 bg-[#1a1a1a] border-gray-700 text-white hover:bg-gray-800', className)} onClick={() => cart.toggleProduct(productId)}>
       {cart.isProductInCart(productId) ? 'Remove from cart' : 'Add to cart'}
     </Button>
   )

@@ -35,7 +35,7 @@ export const SearchInput = ({ disabled, onOpenSidebar }: Props) => {
       <div className='relative w-full'>
         <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400'/>
         <Input 
-          className='pl-8 bg-[#1a1a1a] border-gray-700 text-white placeholder:text-gray-500' 
+          className='pl-12 pr-4 py-3 bg-white border border-gray-300 text-black rounded-full text-sm outline-none' 
           placeholder='Search products' 
           disabled={disabled}
           value={searchValue}
