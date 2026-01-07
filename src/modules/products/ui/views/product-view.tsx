@@ -5,10 +5,9 @@ import dynamic from 'next/dynamic';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import { StarRating } from '@/components/star-rating';
-import { formatCurrency, generateTenantURL } from '@/lib/utils';
+import { formatCurrency } from '@/lib/utils';
 import { useTRPC } from '@/trpc/client';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 
 const CartButton = dynamic(
   () => import('../components/cart-button').then(
@@ -28,8 +27,6 @@ interface ProductViewProps {
 export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
-
-  const [isCopied, setIsCopied] = useState(false);
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-12 max-w-5xl mx-auto flex flex-col md:flex-row gap-12">
@@ -92,7 +89,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
           <summary className="cursor-pointer px-4 py-2 font-medium text-black">Description</summary>
           <div className="px-4 py-2 text-gray-700">
             {data.description ? (
-              <RichText data={data.description as any} />
+              <RichText data={data.description as unknown as import("lexical").SerializedEditorState<import("lexical").SerializedLexicalNode>}/>
             ) : (
               <span className="italic text-gray-400">No description provided.</span>
             )}

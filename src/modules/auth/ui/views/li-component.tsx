@@ -6,23 +6,15 @@ import Image from "next/image"
 import {toast } from "sonner"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Inter } from 'next/font/google';
 import { useRouter } from "next/navigation"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { cn } from "@/lib/utils"
 import { useTRPC } from "@/trpc/client"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 import { loginSchema } from "../../schemas"
-import { on } from "events"
-
-const inter = Inter({
-    subsets: ["latin"],
-    weight: ["700"],
-});
 
 export const LIComponent = () => {
   const router = useRouter();

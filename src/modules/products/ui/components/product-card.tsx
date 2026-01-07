@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingBag, StarIcon } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -20,9 +20,6 @@ export const ProductCard = ({
   name, 
   imageUrl, 
   tenantSlug, 
-  tenantImageUrl, 
-  reviewRating, 
-  reviewCount, 
   price 
 }: ProductCardProps) => {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export function AboutPage() {
+const AboutPage = () => {
   return (
     <div className="pt-20 min-h-screen bg-black">
       <div className="max-w-4xl mx-auto px-6 py-16">
@@ -34,7 +34,7 @@ export function AboutPage() {
           <div>
             <h2 className="text-white mb-6 text-2xl font-semibold">The Moment</h2>
             <p className="text-zinc-400 mb-4">
-              When I first started designing and selling upcycled clothing, I felt that Singaporeans often had a stigma towards secondhand clothes. I didn't see upcycled clothes in that light—instead I saw them as one-of-a-kind garments that people can connect with.
+              When I first started designing and selling upcycled clothing, I felt that Singaporeans often had a stigma towards secondhand clothes. I didn&apos;t see upcycled clothes in that light—instead I saw them as one-of-a-kind garments that people can connect with.
             </p>
             <p className="text-zinc-400">
               I remember meeting an older collector on Carousell. After examining the crewnecks and stitching up close, she praised the designs, and we spent thirty minutes discussing the future of upcycled garments—how they serve as a positive force in the community. That conversation was the moment that gave me the confidence to commit fully to this path.
@@ -70,7 +70,7 @@ export function AboutPage() {
               <h3 className="text-white mb-2 text-xl">Bold & Flashy</h3>
               <p className="text-zinc-500 uppercase tracking-wider text-xs mb-4">Creative Direction</p>
               <p className="text-zinc-400 text-sm">
-                My process starts with moodboarding and sketching without a fixed timeline. I test ideas with mentors and communities—from high fashion to the thrift scene—and refine based on feedback. I'm a person that gravitates more to flashy, attention-grabbing designs. I want to challenge people to style my pieces, and to own them in their own unique way.
+                My process starts with moodboarding and sketching without a fixed timeline. I test ideas with mentors and communities—from high fashion to the thrift scene—and refine based on feedback. I&apos;m a person that gravitates more to flashy, attention-grabbing designs. I want to challenge people to style my pieces, and to own them in their own unique way.
               </p>
             </div>
 
@@ -79,7 +79,7 @@ export function AboutPage() {
               <h3 className="text-white mb-2 text-xl">Waste Nothing</h3>
               <p className="text-zinc-500 uppercase tracking-wider text-xs mb-4">Process</p>
               <p className="text-zinc-400 text-sm">
-                Cost is the biggest hurdle. Upcycled design is labor-intensive and expensive. To stay competitive with fast fashion, I design pieces that utilise offcuts and minimise waste. It's about balancing creativity with practicality so that upcycling can scale affordably. One of the designs I'm most proud of are our reverse flares.
+                Cost is the biggest hurdle. Upcycled design is labor-intensive and expensive. To stay competitive with fast fashion, I design pieces that utilise offcuts and minimise waste. It&apos;s about balancing creativity with practicality so that upcycling can scale affordably. One of the designs I&apos;m most proud of are our reverse flares.
               </p>
             </div>
           </div>
@@ -115,10 +115,10 @@ export function AboutPage() {
 
         {/* Vision Section */}
         <div className="border-t border-zinc-800 pt-16 mb-20">
-          <h2 className="text-white mb-8 text-3xl font-semibold">What's Next</h2>
+          <h2 className="text-white mb-8 text-3xl font-semibold">What&apos;s Next</h2>
           <div className="bg-zinc-900 p-8 rounded-lg">
             <p className="text-zinc-400 mb-4 text-lg">
-              Singapore's sustainable fashion landscape has transformed exponentially over the past five years. Upcycled fashion used to be dismissed or stigmatised. Today, it's gaining real respect.
+              Singapore&apos;s sustainable fashion landscape has transformed exponentially over the past five years. Upcycled fashion used to be dismissed or stigmatised. Today, it&apos;s gaining real respect.
             </p>
             <p className="text-zinc-400 mb-4 text-lg">
               I hope to build a future in the fashion industry where upcycled clothing can compete directly with fast fashion as a genuine, sustainable alternative in terms of both affordability and style.
