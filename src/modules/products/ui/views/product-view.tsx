@@ -1,16 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { RichText } from '@payloadcms/richtext-lexical/react';
-import { formatCurrency } from '@/lib/utils';
+import { StarRating } from '@/components/star-rating';
+import { formatCurrency, generateTenantURL } from '@/lib/utils';
 import { useTRPC } from '@/trpc/client';
 import { Button } from '@/components/ui/button';
-import { Fragment, useState } from 'react';
-import { Progress } from '@/components/ui/progress';
-import { Star } from 'lucide-react';
+import { useState } from 'react';
 
 const CartButton = dynamic(
   () => import('../components/cart-button').then(
@@ -25,21 +23,6 @@ const CartButton = dynamic(
 interface ProductViewProps {
   productId: string;
   tenantSlug: string;
-}
-
-//Adjust colour for star rating -- grey outline and yellow fill 
-export function StarRating({ rating, iconClassName = "" }: { rating: number, iconClassName?: string }) {
-  return (
-    <span> 
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          className={`inline ${iconClassName} ${rating >= i ? "text-yellow-400" : "text-gray-300"}`}
-          fill={rating >= i ? "#facc15" : "none"}
-        />
-      ))}
-    </span>
-  );
 }
 
 export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
@@ -61,6 +44,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             priority
           />
           <button className="absolute top-4 left-4 bg-black text-white rounded-full p-2 shadow">
+            {/* TODO: Implement favorite functionality */}
             {/* Heart icon */}
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" className="text-white">
               <path d="M10 17l-1.45-1.32C4.4 11.36 2 9.28 2 6.5 2 4.5 3.5 3 5.5 3c1.54 0 3.04.99 3.57 2.36h1.87C11.46 3.99 12.96 3 14.5 3 16.5 3 18 4.5 18 6.5c0 2.78-2.4 4.86-6.55 9.18L10 17z"/>
@@ -84,9 +68,10 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
         <div className="flex flex-col gap-2">
           <label className="block text-base text-black mb-0">Size</label>
           <div className="relative w-24">
+            {/* TODO: Implement size stock into products */}
             <select 
               defaultValue="S"
-              className="border border-gray-300 rounded-lg w-24 p-2"
+              className="border border-gray-300 rounded-lg w-24 p-2 text-black bg-white appearance-none pr-8"
             >
               <option value="S">S</option>
               <option value="M">M</option>
@@ -99,11 +84,10 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
               </svg>
             </span>
           </div>
+          {/* TODO: Implement size stock into products */}
           <div className="text-sm text-green-700">In Stock</div>
         </div>
-        <Button className="bg-black text-white rounded-lg w-full py-3 mt-2 font-semibold hover:bg-gray-900 transition">
-          Add to cart
-        </Button>
+        <CartButton className="bg-black text-white rounded-lg w-full py-3 mt-2 font-semibold hover:bg-gray-900 transition" isPurchased={data.isPurchased} tenantSlug={tenantSlug} productId={productId} />
         <details className="mt-4 border-gray-500 rounded-lg bg-white">
           <summary className="cursor-pointer px-4 py-2 font-medium text-black">Description</summary>
           <div className="px-4 py-2 text-gray-700">
@@ -114,23 +98,6 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             )}
           </div>
         </details>
-        {/* Ratings breakdown 
-        <div className="mt-6">
-          <h3 className="text-xl font-medium text-black mb-2">Ratings</h3>
-          <div className="grid grid-cols-[auto_1fr_auto] gap-3 text-black">
-            {[5, 4, 3, 2, 1].map((stars) => (
-              <Fragment key={stars}>
-                <div className="font-medium">
-                  {stars} {stars === 1 ? 'star' : 'stars'}
-                </div>
-                <Progress value={data.ratingDistribution[stars]} className="h-2" />
-                <div className="font-medium">
-                  {data.ratingDistribution[stars]}%
-                </div>
-              </Fragment>
-            ))}
-          </div>
-        </div> */}
       </div>
     </div>
   )
