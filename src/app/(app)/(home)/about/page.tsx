@@ -11,7 +11,7 @@ export function AboutPage() {
         </div>
 
         {/* Hero Image */}
-        <div className="relative aspect-video mb-16 overflow-hidden bg-zinc-900">\
+        <div className="relative aspect-video mb-16 overflow-hidden bg-zinc-900">
             <Image
                 src="/upcycler_studios_founder.jpg"
                 alt="Upcycler Studios Founder"

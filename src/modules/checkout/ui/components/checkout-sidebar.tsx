@@ -18,7 +18,6 @@ export const CheckoutSidebar = ({ total, onPurchase, disabled, isCanceled }: Che
       </div>
       <div className="p-6 flex items-center justify-center">
         <Button
-          variant="elevated"
           disabled={disabled}
           onClick={onPurchase}
           size="lg"
