@@ -53,7 +53,9 @@ export const ProductCard = ({
         
         {/* Product info */}
         <div className="space-y-1">
-          <p className="text-zinc-400 uppercase tracking-wider text-xs">{tenantSlug}</p>
+          <div onClick={handleUserClick} className="text-zinc-400 hover:text-white">
+            <p className="uppercase tracking-wider text-xs">{tenantSlug}</p>
+          </div>
           <h3 className="text-white font-semibold text-lg">{name}</h3>
           <p className="text-white text-sm">{formatCurrency(price)}</p>
         </div>
