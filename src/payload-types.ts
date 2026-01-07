@@ -282,6 +282,10 @@ export interface Product {
    * If checked, this product will be archived.
    */
   isArchived?: boolean | null;
+  /**
+   * Available inventory for this product. Automatically decrements on purchase. Set to 0 to mark as out of stock.
+   */
+  stock: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -486,6 +490,7 @@ export interface ProductsSelect<T extends boolean = true> {
   content?: T;
   isPrivate?: T;
   isArchived?: T;
+  stock?: T;
   updatedAt?: T;
   createdAt?: T;
 }

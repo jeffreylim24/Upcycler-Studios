@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 
+import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
+
+import { useEffect, useState } from "react";
 import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 
 interface Props {
@@ -13,18 +16,31 @@ interface Props {
 }
 
 export const SearchInput = ({ disabled, onOpenSidebar }: Props) => {
+  const [filters, setFilters] = useProductFilters();
+  const [searchValue, setSearchValue] = useState(filters.search);
+
   const trpc = useTRPC();
   const session = useQuery(trpc.auth.session.queryOptions());
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFilters({ search: searchValue });
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchValue, setFilters]);
 
   return (
     <div className='flex items-center gap-2 w-full'>
       <div className='relative w-full'>
         <SearchIcon className='absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400'/>
         <Input 
-          className='pl-12 pr-4 py-3 bg-white border border-gray-300 text-black rounded-full text-sm outline-none'
+          className='pl-12 pr-4 py-3 bg-white border border-gray-300 text-black rounded-full text-sm outline-none' 
           placeholder='Search products' 
           disabled={disabled}
-          />
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
       </div>
       <Button variant='elevated' className='size-12 shrink-0 flex lg:hidden bg-[#1a1a1a] border-gray-700 text-white hover:bg-[#252525]' onClick={onOpenSidebar}>
         <ListFilterIcon />

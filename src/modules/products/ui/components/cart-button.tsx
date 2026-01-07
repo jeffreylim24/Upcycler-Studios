@@ -9,10 +9,13 @@ interface Props {
   productId: string;
   isPurchased?: boolean;
   className?: string;
+  stock?: number;
 }
 
-export const CartButton = ({ tenantSlug, productId, isPurchased, className }: Props) => {
+export const CartButton = ({ tenantSlug, productId, isPurchased, stock, className }: Props) => {
   const cart = useCart(tenantSlug);
+  const currentStock = stock ?? 1;
+  const isOutOfStock = currentStock <= 0;
 
   if (isPurchased) {
     return (
@@ -20,6 +23,14 @@ export const CartButton = ({ tenantSlug, productId, isPurchased, className }: Pr
         <Link prefetch href={`/library/${productId}`}>
           View in Library
         </Link>
+      </Button>
+    )
+  }
+
+  if (isOutOfStock) {
+    return (
+      <Button variant='elevated' className='flex-1 size-12 bg-gray-700 border-gray-600 text-gray-400 cursor-not-allowed' disabled>
+        Out of stock
       </Button>
     )
   }
